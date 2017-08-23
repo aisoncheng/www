@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+         http://www.springframework.org/schema/tx
+         http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.2.xsd
+         http://www.springframework.org/schema/cache 
+         http://www.springframework.org/schema/cache/spring-cache.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+         
+  
+    <mvc:annotation-driven />
+    <context:component-scan base-package="com.icss.dis.controller" >
+    	 <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    	 <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
+    
+    
+    <!-- spring mvc的拦截器 -->
+<!-- 	<mvc:interceptors>
+        <bean class="com.icss.dis.interceptors.TokenFilter" />
+	</mvc:interceptors> -->
+	
+
+
+  <mvc:default-servlet-handler/>
+ 
+ <!-- responsebody 的返回配置.. 配置这个解决时间返回格式错误的情况 -->
+  <mvc:annotation-driven  content-negotiation-manager="contentNegotiationManager">
+		<mvc:message-converters>
+			  <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+                <property name="objectMapper">  
+                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">  
+                        <property name="dateFormat">  
+                            <bean class="java.text.SimpleDateFormat">  
+                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />  
+                            </bean>  
+                        </property> 
+<!--                         <property name="serializationInclusion"> -->
+<!--                         	<value type="com.fasterxml.jackson.annotation.JsonInclude.Include">NON_NULL</value> -->
+<!--                     	</property>   -->
+                    </bean> 
+                </property>  
+            </bean>  
+		</mvc:message-converters>
+  </mvc:annotation-driven>
+  
+  <!-- responseBody 406问题 -->
+  <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	     <property name="favorPathExtension" value="false" />
+	     <property name="favorParameter" value="true" />
+	     <property name="mediaTypes" >
+	          <value>
+	               json=application/json
+	               xml=application/xml
+	          </value>
+	     </property>
+   </bean>
+
+    <!-- 对转向页面的路径解析。prefix：前缀， suffix：后缀     这个是重点  当页面是jsp的时候可以设置页面跳转到哪里 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"	p:prefix="/WEB-INF/" p:suffix=".jsp" />
+
+    
+    <!-- SpringMVC上传文件时，需要配置MultipartResolver处理器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+ 		<!-- 指定所上传文件的总大小不能超过200KB。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 --> 
+		<property name="maxUploadSize" value="204800000" />
+	</bean>
+
+</beans>

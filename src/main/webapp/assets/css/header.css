@@ -1,0 +1,175 @@
+
+.headContainer{
+    height: 100px;
+    width: 1080px;
+    margin:0 auto;
+}
+
+/**左边的log 和在线办证*/
+.leftHead {
+   width: 510px;
+   float: left;
+   height: 100%;
+   position: relative;
+}
+.leftHead img{
+  margin-left: 56px;
+  margin-top: 30px;
+}
+.leftHead span{
+  height: 48px;
+  line-height: 60px;
+  font-size: 14pt;
+  font-family: 微软雅黑;
+  position: absolute;
+  right: 15px;
+  top:30px;
+}
+
+/**头部的右侧 欢迎和图片
+style={{height:'24px',lineHeight:'24px',fontSize:'10.5pt'}}
+style={{display:'flex',alignItems:'center',fontSize:'10.5pt'}}
+*/
+.rightHead{
+  padding-right: 45px;
+  height: 100%;
+  float: right;
+}
+.wellcome{
+  height: 50%;
+  font-size: 10.5pt;
+}
+.wellcome .wellcomeName, .wellcome .wellcomeIcon{
+   float: left;
+   height: 30px;
+   line-height: 30px;
+   width: 50%;
+}
+.wellcome div:last-child img{
+  margin-top: 3px;
+  margin-right: 10px;
+}
+.wellcome div img,.wellcome div a{
+  display: inline-block;
+  float: left;
+  text-decoration: none;
+}
+
+
+
+.containerMy{
+  display: flex;
+  width: 1000px;
+  background-color: #f3f3f3;
+  margin:0 auto;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  overflow: hidden;
+}
+.containerBody{
+  background: #fff;
+  width: 1000px;
+  border: 1px solid #b0d5f0;
+  border-radius: 2px;
+  padding: 15px;
+  float: left;
+
+}
+.containerTop{
+  height: 50px;
+  line-height: 50px;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  float:left;
+}
+.containerTop img{
+  float: left;
+  width: 50px;
+  height: 50px;
+}
+.containerTopRight{
+  display: flex;
+  flex-grow: 1;
+  justify-content:space-between;
+  align-items: flex-end;
+  margin-left: 10px;
+  border-bottom: 2px solid #3f7bad;
+  height: 100%;
+  margin-top: -5px;
+  float: left;
+  width: 890px;
+}
+/**style={{fontSize:'24px',lineHeight:'40px'}}*/
+/**style={{lineHeight:'25px',fontSize:'14px'}}*/
+.containerTopRight span{
+  display: inline-block;
+}
+.containerTopRight span.applyType{
+  font-size: 24px;
+  line-height: 60px;
+  float: left;
+  height: 100%;
+}
+.containerTopRight span.applyCode{
+  font-size: 14px;
+  line-height: 25px;
+  height: 100%;
+  line-height: 65px;
+  float: right;
+}
+/*中间的模块*/
+.containerCenter{
+  display: flex;
+  padding-top: 20px;
+  float:left;
+  width:100%;
+}
+.containerLeft{
+  width: 14%;
+  line-height: 50px;
+  flex-grow: 0;
+  float: left;
+  border-right: 1px dotted gray;
+  margin-left: -15px;
+  height: 100%;
+}
+.containerLeft span,.containerLeft div{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+.containerLeft div{
+  height: 110px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.containerLeft .erect{
+  width: 1px;
+  height: 30px;
+  background: #c9c9c9;
+  height: 80px;
+  margin:2px 0px;
+  margin-left: 50%;
+}
+.containerRight{
+  width: 85%;
+  display: flex;
+  flex-grow: 0;
+  justify-content: center;
+  float: right;
+  margin-left: 20px;
+}
+
+.containerRight{
+	position: relative;
+}
+
+
+button{
+  position: relative
+}
+
+}

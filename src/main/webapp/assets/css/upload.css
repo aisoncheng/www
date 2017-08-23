@@ -1,0 +1,109 @@
+.hidden {
+	display: none;
+}
+
+.uploadContainer {
+	border: 1px dotted rgb(202, 195, 195);
+	margin-top: 20px;
+	border-bottom: none;
+}
+
+.uploadRow {
+	display: block;
+	overflow: hidden;
+	position: relative;
+	border: 1px dotted rgb(202, 195, 195);
+	border-top:none;
+}
+
+.uploadRow .labelCol {
+	display: block;
+	float: left;
+}
+
+
+.uploadRow .labelCol .fileLable {
+	display: block;
+	height: 110px;
+	line-height: 110px;
+	width: 100%;
+	text-align: center;
+}
+
+
+.uploadRow .contentCol {
+	width: 100%;
+	display: block;
+	float: left;
+}
+
+.uploadRow .contentCol  .contentColInner {
+	position: relative;
+	min-height: 30px;
+	overflow: hidden;
+}
+
+.uploadRow .contentCol .contentColInner .showImg {
+	border-left: 1px dotted rgb(202, 195, 195);
+	float: left;
+	padding: 10px 0px;
+	min-height: 90px;
+}
+
+
+.uploadRow .contentCol .contentColInner .showImg .imgParent {
+	border: 1px solid #57c5f7;
+	width: 80px;
+	height: 80px;
+	margin-right: 15px;
+	border-radius: 3px;
+	margin-left: 15px;
+	cursor: pointer;
+	float: left;
+	position: relative; 
+}
+
+.uploadRow .contentCol .contentColInner .showImg .imgParent  .icon {
+	position : absolute;
+	top: -6px;
+	right: -6px;
+}
+
+.uploadRow .contentCol .contentColInner .showImg .imgParent  img {
+	margin-top: 3px;
+	margin-left: 3px;
+	width: 74px;
+	height: 74px;
+	border: none;
+}
+
+
+.rc-upload {
+	float: right;
+	margin-top: 40px;
+	margin-right: 20px;
+	position: relative;
+}
+
+.rc-upload input{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+
+
+.uploadContainer .row{
+	margin-bottom: 0px;
+}
+
+
+.uploadContainer .col{
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+}
+
+.contentColInner input{
+	opacity:0;
+}

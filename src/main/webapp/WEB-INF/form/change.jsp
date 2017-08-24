@@ -16,6 +16,14 @@
 .faren .col{
 	float: left;
 }
+.retailLicNoDiv{
+	position:relative;
+}
+.retailLicNoDiv img{
+	position: absolute;
+	top: 11px;
+	right: 30px;
+}
 </style>
 </head>
 <body>
@@ -60,7 +68,7 @@
 									<div class="row">
 										<div class="col col-12">
 											<label>经营地址：</label>
-											<input name="bizAddrStreet"  class='disabled'  autoFill='true' disabled="disabled"/>
+											<input   class='disabled "bizAddrStreet"'  autoFill='true' disabled="disabled"/>
 										</div>
 										<div class="col col-12">
 											<label>经济类型：</label> 
@@ -69,11 +77,10 @@
 									</div>
 
 									<div class="row">
-										<div class="col col-12">
+										<div class="col col-12 retailLicNoDiv">
 											<label>许可证号</label> 
-											<select>
-												<option>123131</option>
-											</select>
+											<input name="retailLicNo" class="retailLicNo disabled"  readonly="readonly" disabled="disabled"/>
+											<img alt="" src="${webPath}/assets/img/loading.gif">
 										</div>
 										<div class="col col-12">
 											<label>联系人</label>
@@ -146,7 +153,7 @@
 									</div>
 									
 									
-									<div class="sectionDiv" style="float: left;">
+									<div class="sectionDiv disabled" style="float: left;">
 										<div class="sectionTitle"><input class="checkbox" name="entNameIsChange" type="checkbox" />企业(字号)名称变更</div>
 										<div class="row" style="margin-top: 20px;">
 											<div class="col col-24">
@@ -157,7 +164,7 @@
 									</div>
 									
 									
-									<div class="sectionDiv" style="float: left;">
+									<div class="sectionDiv disabled" style="float: left;">
 										<div class="sectionTitle"><input class="checkbox" name="entNameIsChange" type="checkbox" />法定代表人(负责人)、经营者姓名变更</div>
 										<div class="row faren" style="margin-top: 20px;">
 											<div class=" col" style="width: 50%">
@@ -175,8 +182,33 @@
 									</div>
 									
 									
+									<div class="sectionDiv disabled" style="float: left;">
+										<div class="sectionTitle"><input class="checkbox" name="bizAddrIsChange" type="checkbox" />经营地址名称变更</div>
+										<div class="col col-24">
+											<label style="float: left;">经营地址类型变更</label> 
+											<p style="float: left; margin-top: 10px;">
+												<input style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio">
+												<span>经营地址名称变更（仅适用于经营地址名称的变更；实际地址发生改变的，请申请新办。）</span>
+											</p>
+											<p style="float: left;">
+												<input  style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio">
+												<span>拆迁导致的经营地址变更（仅适用于因道路规划、城市建设等客观原因造成的经营地址改变。）</span>
+											</p>
+										</div>
+										<div class="row">
+											<div class="col col-12">
+												<label>新经营地址</label>
+												<input name="newBizAddrAdc" readonly="readonly"  />
+											</div>
+											<div class="col col-12">
+												<label>新经营地址(街道)</label> 
+												<input name="newBizAddrStreet"  />
+											</div>
+										</div>
+									</div>
 									
-									<div class="sectionDiv" style="float: left;">
+									
+									<div class="sectionDiv disabled" style="float: left;">
 										<div class="sectionTitle"><input class="checkbox" name="entNameIsChange" type="checkbox" />变更经济类型</div>
 										<div class="row">
 										<div class="col col-24 " style="margin-top: 30px;">
@@ -342,21 +374,28 @@
 
 
 
+
+
+
+
 </body>
 
 
 <script type="text/javascript">
-	$(function() {
-
+	$(document).ready(function(){
 		
+	//layer.myerror();
+		
+	console.log(window.user);
 		$(".picName").val(user.username);
 		$(".lineTel").val(user.mobile);
 		
 		
-		$('.postAddrAdc').dist();
-
 		
-		$(".biPeriod").asDatepicker({
+		$('.postAddrAdc').dist();
+		$("input[name='newBizAddrAdc']").dist();
+		
+		$("input[name='biPeriod']").asDatepicker({
 			lang : 'zh'
 		});
 		$(".tenancyDate").asDatepicker({
@@ -364,13 +403,53 @@
 			mode : 'range'
 		});
 		
-		
 		$('#distpicker').distpicker({
 			province : '浙江省',
 			city : '杭州市',
 			district : '西湖区'
 		});
 
+		
+		
+		
+		//查询许可证信息
+		 $.ajaxPost({
+			url:cfg.basePath+'/licPreGns/findTLicRlicInfoListZJ',
+			data:{applyType:$.getApplyTypCode()},
+			ok:function(msg){
+				var lics = msg.data;
+				$(".retailLicNoDiv img").hide();
+				
+				$(".retailLicNoDiv .retailLicNo").removeClass('disabled').removeAttr('disabled');
+				
+				if(lics.length==0){
+					layer.myerror('没有查找到许可证信息不能办理该业务');
+					return false;
+				}
+				for(var i=0;i<lics.length;i++){
+					lics[i].disabled = lics[i].isCanApply=='0' ? true:false;
+				}
+				$(".retailLicNo").select({data:lics,key:'licNo',valKey:'licNo',cb:function(data){
+					if(data.disabled){
+						layer.myerror("证号为【"+data.licNo+"】的许可证不可办理此业务,原因：【"+data.notApplyReason+"】");
+					}else{
+						
+						$("input[name='entName']").val(data.companyName);
+						//$("input[name='picName']").val(data.managerName);
+						$(".bizAddrStreet").val(data.picAddrStreet);
+						
+					}	
+				}});
+			}
+		});
+		
+		
+		
+		//处理各种点击启用禁用
+		
+		
+		
+		
 		$(".radioBody").click(function() {
 			var val = $(this).data('checked');
 			var radio = $(this).find("input[type='radio']");
@@ -388,6 +467,7 @@
 				$('.otherEcoType').hide();
 			}
 		});
+		
 
 		$(".layui-form").validate({
 			rules : {
@@ -473,6 +553,7 @@
 			}
 		});
 
+		
 		
 		var flag = false;
 		new File(
@@ -624,6 +705,7 @@
 			});
 			//.layui-form
 		});
+
 	});
 </script>
 

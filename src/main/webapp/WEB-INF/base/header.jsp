@@ -24,6 +24,11 @@
       </div>
  </div>
  
+<script type="text/javascript">
+ 	$(function(){
+ 		$('.wellcomeName').html("欢迎您："+window.user.username);
+ 	})
+ </script>
 
  
  

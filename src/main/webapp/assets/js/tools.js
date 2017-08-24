@@ -39,7 +39,8 @@
 			},
 			//获取申请类型编码
 			getApplyTypCode :function(){
-				return  applyType[$.applyType()];
+				var apply  = cfg.applyWays[$.applyType()];
+				return apply ? apply.apply : null;
 			},
 			//数字转成中文数字
 			num2Zw:function(i){
@@ -162,7 +163,79 @@
 	}
 	
 	
+	
+	
+	
 	$.fn.extend({
+		
+		//下拉选
+		/**
+		 * 
+		 *接收的参数类似 
+		 *data 数组 每个元素是一个json对象
+		 *{data:数据数组,key:展示哪个字段,valKey:指是哪个字段}
+		 **/
+		select:function(param){
+			var target = $(this);
+			
+			var width = target.outerWidth();
+			var pos = target.offset();
+			var height = target.outerHeight();
+			
+			
+		
+			var mySelect = $("<div class='mySelect' style='width:"+width+"px;height:200px;top:"+(pos.top+height+5)+"px;left:"+pos.left+"px;display:none;'>"+
+					             "<div class='options'>"+
+					                "<ul>"+
+					                "</ul>"+
+					             "</div>"+
+					         "</div>");
+			
+			$('body').append(mySelect);
+			
+			var options = mySelect.find('.options ul');
+			for(var i=0;i<param.data.length;i++){
+				var json = param.data[i];
+				
+				var li = $("<li value='"+json[param.valKey]+"'>"+json[param.key]+"</li>");
+				li.data("data",json);
+				if(json.disabled){
+					li.addClass('disabled');
+				}
+				options.append(li);
+			}
+			
+			var  flag = false;
+			target.click(function(){
+				if(mySelect.css('display')=='none'){
+					mySelect.show();
+				}else{
+					mySelect.hide();
+				}
+			});
+			
+			mySelect.on("click","li",function(){
+				
+				var data = $(this).data('data');
+				param.cb && param.cb(data);
+				
+				var val = $(this).attr("value");
+				if($(this).hasClass('disabled')){
+					return false;
+				}else{
+					target.val(val);
+					mySelect.hide();
+				}
+			});
+			
+			
+			$(document).click(function(e){
+				if($(e.target).parents('.mySelect').length==0 && !$(e.target).is(target)){
+					mySelect.hide();
+				}
+			});
+			
+		},
 		dist:function(){
 			var target = $(this);
 			target.attr("readOnly",true);
@@ -236,18 +309,17 @@
 //每次页面刷新加载设置一次cookie
 $.setParamsCookie();
 
-window.user = {};
 //请求一次人员信息
-$.ajaxPost({
-	url:cfg.basePath+"/licPreGns/getUserInfoZJ",
-	ok:function(msg){
-	  if(msg.code==200){
-		  window.user = msg.data;
-		  $('.wellcomeName').html("欢迎您："+user.username);
-	  }
-	}
-});
-
+(function(w){
+	$.ajaxPost({
+		url:cfg.basePath+"/licPreGns/getUserInfoZJ",
+		ok:function(msg){
+		  if(msg.code==200){
+			  w.user = msg.data;
+		  }
+		}
+	});
+})(window)
 
 
 

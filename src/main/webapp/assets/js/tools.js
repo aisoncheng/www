@@ -32,10 +32,17 @@
 				        { label: '无偿使用(长期)', value: 2505 }
 				      ];
 	
-	
+      var picType = [
+                       { label:'身份证',value:2801 },
+                       { label:'户口本',value:2802 },
+                       { label:'驾照',value:2803 },
+                       { label:'护照',value:2804 },
+                       { label:'其他',value:2805 }
+                    ];
 	
 	$.extend({
 		
+			picType:picType,
 			/**
 			 * 获取经济类型
 			 **/
@@ -226,7 +233,28 @@
 			var width = target.outerWidth();
 			var pos = target.offset();
 			var height = target.outerHeight();
+
+			var parent = target.parent();
+			target.css({position:"relative"});
+			var text = $("<span id='"+target.attr('name')+"'></span>");
 			
+
+			//console.log(target.css);
+			
+			text.css({width:(width-9)+'px',height:(height-4)+'px','display':'block','position':'absolute','top':(pos.top+2)+'px',
+					 'left':(pos.left+2)+'px','z-index':'888',"backgroundColor":"#fff","lineHeight":height+"px",'padding-left':'5px'});
+			
+			$("body").append(text);
+
+			
+			if(target.hasClass('disabled')||target.attr('disabled')){
+				text.addClass('disabled');
+			}
+			
+			if(param.initVal){
+				target.val(param.initVal[param.valKey]);//.attr('data-value',param.initVal[param.valKey]);
+				text.html(param.initVal[param.key]);
+			}
 			
 		
 			var mySelect = $("<div class='mySelect' style='width:"+width+"px;height:200px;top:"+(pos.top+height+5)+"px;left:"+pos.left+"px;display:none;'>"+
@@ -251,7 +279,10 @@
 			}
 			
 			var  flag = false;
-			target.click(function(){
+			text.click(function(){
+				if(target.hasClass('disabled')){
+					return false;
+				}
 				if(mySelect.css('display')=='none'){
 					mySelect.show();
 				}else{
@@ -260,22 +291,20 @@
 			});
 			
 			mySelect.on("click","li",function(){
-				
 				var data = $(this).data('data');
 				param.cb && param.cb(data);
-				
 				var val = $(this).attr("value");
 				if($(this).hasClass('disabled')){
 					return false;
 				}else{
-					target.val(val);
+					target.val(data[param.valKey]);
+					text.html(data[param.key]);
 					mySelect.hide();
 				}
 			});
 			
-			
 			$(document).click(function(e){
-				if($(e.target).parents('.mySelect').length==0 && !$(e.target).is(target)){
+				if($(e.target).parents('.mySelect').length==0 && !$(e.target).is(text)){
 					mySelect.hide();
 				}
 			});
@@ -398,6 +427,16 @@ $.setParamsCookie();
 	})();
 	w.pubsub = pubsub;
 	
+	
+	//订阅 radio的disabled事件
+	pubsub.subscribe('.sectionDiv>radio',function(key,data){
+		//如果启用的..
+//		if(data.checked){
+//			console.log($(key));
+//		}else{
+//			data.el.find('input[type='radio']');
+//		}
+	});
 	
 	
 	$.ajaxPost({

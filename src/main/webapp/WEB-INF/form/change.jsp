@@ -57,22 +57,22 @@
 									<div class="row">
 										<div class="col col-12">
 											<label>企业/字号名称：</label>
-											<input name="entName"  class='disabled entName'  autoFill='true' disabled="disabled"/>
+											<input   class='disabled entNameLic'  autoFill='true' disabled="disabled"/>
 										</div>
 										<div class="col col-12">
 											<label>负责人/经营者：</label> 
-											<input name="picName"  class="disabled" autoFill='true' disabled="disabled"/>
+											<input   class="disabled managerNameLic" autoFill='true' disabled="disabled"/>
 										</div>
 									</div>
 									
 									<div class="row">
 										<div class="col col-12">
 											<label>经营地址：</label>
-											<input   class='disabled "bizAddrStreet"'  autoFill='true' disabled="disabled"/>
+											<input   class='disabled bizAddrStreetLic'  autoFill='true' disabled="disabled"/>
 										</div>
 										<div class="col col-12">
 											<label>经济类型：</label> 
-											<input name="ecoType"  class="disabled" autoFill='true' disabled="disabled"/>
+											<input  class="disabled ecoTypeLic" autoFill='true' disabled="disabled"/>
 										</div>
 									</div>
 
@@ -385,29 +385,30 @@
 	$(document).ready(function(){
 		
 	//layer.myerror();
+	 //订阅user对应的 对象	
+	 pubsub.subscribe("user",function(key,data){
+		 $(".picName").val(data.username);
+		 $(".lineTel").val(data.mobile);
+		 console.log(data);
+	 });
 		
-	console.log(window.user);
-		$(".picName").val(user.username);
-		$(".lineTel").val(user.mobile);
 		
-		
-		
-		$('.postAddrAdc').dist();
-		$("input[name='newBizAddrAdc']").dist();
-		
-		$("input[name='biPeriod']").asDatepicker({
-			lang : 'zh'
-		});
-		$(".tenancyDate").asDatepicker({
-			lang : 'zh',
-			mode : 'range'
-		});
-		
-		$('#distpicker').distpicker({
-			province : '浙江省',
-			city : '杭州市',
-			district : '西湖区'
-		});
+	$('.postAddrAdc').dist();
+	$("input[name='newBizAddrAdc']").dist();
+	
+	$("input[name='biPeriod']").asDatepicker({
+		lang : 'zh'
+	});
+	$(".tenancyDate").asDatepicker({
+		lang : 'zh',
+		mode : 'range'
+	});
+	
+	$('#distpicker').distpicker({
+		province : '浙江省',
+		city : '杭州市',
+		district : '西湖区'
+	});
 
 		
 		
@@ -433,11 +434,10 @@
 					if(data.disabled){
 						layer.myerror("证号为【"+data.licNo+"】的许可证不可办理此业务,原因：【"+data.notApplyReason+"】");
 					}else{
-						
-						$("input[name='entName']").val(data.companyName);
-						//$("input[name='picName']").val(data.managerName);
-						$(".bizAddrStreet").val(data.picAddrStreet);
-						
+						$(".entNameLic").val(data.companyName);
+						$(".managerNameLic").val(data.managerName);
+						$(".bizAddrStreetLic").val(data.businessAddr);
+						$(".ecoTypeLic").val(data.ecoTypeOther ? data.ecoTypeOther : $.getEcoTypeByCode(data.ecoType));
 					}	
 				}});
 			}

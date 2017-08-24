@@ -26,7 +26,9 @@
  
 <script type="text/javascript">
  	$(function(){
- 		$('.wellcomeName').html("欢迎您："+window.user.username);
+ 		pubsub.subscribe("user",function(key,data){
+ 			$('.wellcomeName').html("欢迎您："+data.username);
+ 		});
  	})
  </script>
 

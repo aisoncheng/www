@@ -2,9 +2,54 @@
 
 	
 	var numZw =  {1:"一",2:"二",3:"三",4:"四",5:"五",6:"六",7:"七",8:"八",9:"九",0:"零"}
-	var applyType = {'new':1001};
+	
+	
+	
+	var ecoType = [
+	                { label: '国有', value: 1401 },
+	                { label: '集体', value: 1402 },
+	                { label: '个体', value: 1403 },
+	                { label: '合伙', value: 1404 },
+	                { label: '股份制(合作)', value: 1405 },
+	                { label: '个人独资', value: 1406 },
+	                { label: '有限责任', value: 1407 },
+	                { label: '外商投资', value: 1408 },
+	                { label: '股份有限公司', value: 1409 },
+	                { label: '其他', value: 1410 },
+	              ];
+      var PlaceOwnerAll = [
+				        { label: '自有', value: 2501 },
+				        { label: '租赁', value: 2502 },
+				        { label: '无偿使用', value: 2503 },
+				        { label: '租赁长期', value: 2504 },
+				        { label: '无偿使用长期', value: 2505 },
+				      ];
+      var PlaceOwner = [
+				        { label: '自有', value: 2501 },
+				        { label: '租赁', value: 2502 },
+				        { label: '无偿使用', value: 2503 },
+				        { label: '租赁(长期)', value: 2504 },
+				        { label: '无偿使用(长期)', value: 2505 }
+				      ];
+	
+	
 	
 	$.extend({
+		
+			/**
+			 * 获取经济类型
+			 **/
+			getEcoTypeByCode:function(code) {
+			  let name = '';
+			  
+			  $(ecoType).each(function(i,v){
+				   if (code === v.value) {
+				      name = info.label;
+				      return false;
+				   }
+			  });
+			  return name;
+			},
 			ajaxPost:function(param){
 				 $.ajax({
 					 headers: {
@@ -311,15 +356,78 @@ $.setParamsCookie();
 
 //请求一次人员信息
 (function(w){
+
+	/**
+	 *逻辑是这样的 
+	 *将回调函数放置在某个全局的变量中.. key val的形式.. key为需要订阅的消息名称 类似key 
+	 *当某个操作 发布了这个消息的时候 调用这个回掉方法.. 
+	 * 
+	 **/
+	var pubsub = (function(){
+	    var q = {}
+	        topics = {},
+	        subUid = -1;
+	    	vals = {};
+	    //发布消息
+	    q.publish = function(topic, args) {
+	    	vals[topic] = args;
+	        if(!topics[topic]) {return;}
+	        var subs = topics[topic],
+	            len = subs.length;
+	        while(len--) {
+	            subs[len].func(topic, args);
+	        }
+	        return this;
+	    };
+	    //订阅事件
+	    q.subscribe = function(topic, func) {
+	        topics[topic] = topics[topic] ? topics[topic] : [];
+	        var token = (++subUid).toString();
+	        topics[topic].push({
+	            token : token,
+	            func : func
+	        });
+	        //如果是先发布了消息 后再订阅.. 
+	        if(vals[topic]){
+	        	func(topic,vals[topic]);
+	        }
+	        return token;
+	    };
+	    return q;
+	    //取消订阅就不写了，遍历topics，然后通过保存前面返回token，删除指定元素
+	})();
+	w.pubsub = pubsub;
+	
+	
+	
 	$.ajaxPost({
 		url:cfg.basePath+"/licPreGns/getUserInfoZJ",
 		ok:function(msg){
 		  if(msg.code==200){
-			  w.user = msg.data;
+			  console.log(msg);
+			  pubsub.publish("user", msg.data);
 		  }
 		}
 	});
+	
+	
 })(window)
+
+
+////触发的事件
+//var logmsg = function(topics, data) {
+//    console.log("logging:" + topics + ":" + data);
+//}
+////监听指定的消息'msgName'
+//var sub = pubsub.subscribe('msgName', logmsg);
+////发布消息'msgName'
+//pubsub.publish('msgName', 'hello world');
+////发布无人监听的消息'msgName1'
+//pubsub.publish('anotherMsgName', 'me too!');
+
+
+
+
 
 
 

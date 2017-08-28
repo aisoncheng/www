@@ -392,6 +392,7 @@
 		 $(".lineTel").val(data.mobile);
 	 });
 	
+	
 	$(".newPicCidType").select({data:$.picType,key:'label',valKey:'value',initVal:{ label:'身份证',value:2801 }});
 	$('.postAddrAdc').dist();
 	$("input[name='newBizAddrAdc']").dist();

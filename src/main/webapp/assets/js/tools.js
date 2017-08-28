@@ -32,9 +32,17 @@
 				        { label: '无偿使用(长期)', value: 2505 }
 				      ];
 	
-	
+      var picType = [
+                       { label:'身份证',value:2801 },
+                       { label:'户口本',value:2802 },
+                       { label:'驾照',value:2803 },
+                       { label:'护照',value:2804 },
+                       { label:'其他',value:2805 }
+                    ];
 	
 	$.extend({
+		
+			picType:picType,
 		
 			/**
 			 * 获取经济类型
@@ -51,6 +59,7 @@
 			  return name;
 			},
 			ajaxPost:function(param){
+				 jQuery.support.cors = true;
 				 $.ajax({
 					 headers: {
 						 accesstoken: $.getCookieAcce(),
@@ -68,6 +77,7 @@
 						 param.ok && param.ok(msg);
 					 },
 					 error:function(msg,b,c){
+						 console.log(msg,b,c);
 						 layer.alert('系统繁忙【'+c+'】',{title:'友情提醒'});
 						 param.fail && param.fail(msg);
 					 }

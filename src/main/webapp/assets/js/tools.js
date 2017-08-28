@@ -40,7 +40,7 @@
 			 * 获取经济类型
 			 **/
 			getEcoTypeByCode:function(code) {
-			  let name = '';
+			  var name = '';
 			  
 			  $(ecoType).each(function(i,v){
 				   if (code === v.value) {
@@ -53,8 +53,8 @@
 			ajaxPost:function(param){
 				 $.ajax({
 					 headers: {
-						 accesstoken: $.getCookieAcce(),
-						 orgCode: $.getCookieOrg()
+						 accesstoken: '8aac95e05e13632c015e2661cab9000d',
+						 orgCode: '10330101'
 					 },
 					 url:param.url,
 					 type:param.type||'post',
@@ -115,7 +115,7 @@
 			 *获取queryString的参数
 			 **/
 			getQueryParam:function(name) {
-			  let queryString = location.search;
+			  var queryString = location.search;
 			  if (!queryString) {
 			    return {};
 			  }
@@ -147,10 +147,10 @@
 			  }
 			  var cookies = cookieStr.split(';');
 			  var cookieJson = { size: 0 };
-			  let size = 0;
+			  var size = 0;
 			  $(cookies).each(function(i,v){
 				  var ck = v.split('=');
-				  cookieJson[ck[0].trim()] = ck[1].trim();
+				  cookieJson[$.trim(ck[0])] = $.trim(ck[1]);
 				  size++;
 			  });
 			  cookieJson.size = size;

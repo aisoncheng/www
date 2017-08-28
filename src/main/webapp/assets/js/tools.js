@@ -68,12 +68,14 @@
 					 data:param.data,
 					 dataType:'json',
 					 success:function(msg){
+						
 						 if(msg.code!=200){
 							 layer.alert(msg.message,{title:'友情提醒'});
 						 }
 						 param.ok && param.ok(msg);
 					 },
-					 error:function(msg){
+					 error:function(msg,b,c){
+						 layer.alert('系统繁忙【'+c+'】',{title:'友情提醒'});
 						 param.fail && param.fail(msg);
 					 }
 				 });

@@ -23,6 +23,7 @@
 	position: absolute;
 	top: 11px;
 	right: 30px;
+	right: 43px\9;
 }
 </style>
 </head>
@@ -141,7 +142,7 @@
 										<div class="col col-24 ">
 											<label class="ecoTypeLable">租赁/无偿使用期限</label> <input
 												name='tenancyDate' style="width: 250px;" class='tenancyDate' />
-											<input type='checkbox' name='changqi' class='changqi'>
+											<input type='checkbox'  class='changqi'>
 											长期
 										</div>
 									</div>
@@ -181,15 +182,15 @@
 									
 									
 									<div class="sectionDiv disabled" style="float: left;">
-										<div class="sectionTitle"><input class="checkbox" name="bizAddrIsChange" type="checkbox" />经营地址名称变更</div>
+										<div class="sectionTitle"><input class="checkbox bizAddrIsChange" type="checkbox" />经营地址名称变更</div>
 										<div class="col col-24">
 											<label style="float: left;">经营地址类型变更</label> 
 											<p style="float: left; margin-top: 10px;">
-												<input style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio">
+												<input style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio" value="1">
 												<span>经营地址名称变更（仅适用于经营地址名称的变更；实际地址发生改变的，请申请新办。）</span>
 											</p>
 											<p style="float: left;">
-												<input  style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio">
+												<input  style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio" value="2">
 												<span>拆迁导致的经营地址变更（仅适用于因道路规划、城市建设等客观原因造成的经营地址改变。）</span>
 											</p>
 										</div>
@@ -207,44 +208,44 @@
 									
 									
 									<div class="sectionDiv disabled" style="float: left;">
-										<div class="sectionTitle"><input class="checkbox" name="entNameIsChange" type="checkbox" />变更经济类型</div>
+										<div class="sectionTitle"><input class="checkbox ecoTypeIsChange"  type="checkbox" />变更经济类型</div>
 										<div class="row">
 										<div class="col col-24 " style="margin-top: 30px;">
 											<label class="ecoTypeLable">经济类型</label>
 											<div class="ecoType">
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1401" /><span>国有</span>
+													<input name='newEcoType' type='radio' value="1401" /><span>国有</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1402" /><span>集体</span>
+													<input name='newEcoType' type='radio' value="1402" /><span>集体</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1403" /><span>个体</span>
+													<input name='newEcoType' type='radio' value="1403" /><span>个体</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1404" /><span>合伙</span>
+													<input name='newEcoType' type='radio' value="1404" /><span>合伙</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1405" /><span>股份制(合作)</span>
+													<input name='newEcoType' type='radio' value="1405" /><span>股份制(合作)</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1406" /><span>个人独资</span>
+													<input name='newEcoType' type='radio' value="1406" /><span>个人独资</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1407" /><span>有限责任</span>
+													<input name='newEcoType' type='radio' value="1407" /><span>有限责任</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1408" /><span>外商投资</span>
+													<input name='newEcoType' type='radio' value="1408" /><span>外商投资</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1409" /><span>股份有限公司</span>
+													<input name='newEcoType' type='radio' value="1409" /><span>股份有限公司</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1410" /><span>其他</span>
+													<input name='newEcoType' type='radio' value="1410" /><span>其他</span>
 												</div>
 												<div>
-													<input name='ecoTypeOther' style="width: 80px;"
-														class='hidden otherEcoType' />
+													<input name='newEcoTypeOther' style="width: 80px;"
+														class='hidden newEcoTypeOther' />
 												</div>
 											</div>
 										</div>
@@ -382,6 +383,8 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		
+	
 	//layer.myerror();
 	 //订阅user对应的 对象	
 	 pubsub.subscribe("user",function(key,data){
@@ -699,16 +702,16 @@
 				return false;
 			}
 			
-			var  data = $(".layui-form").serialize();
+			var  formData = $(".layui-form").getFormData();
 			
-			var formData = {};
+			/* var formData = {};
 			var datas = data.split('&');
 			$(datas).each(function(i,v){
 				var vs = v.split('=');
 				formData[vs[0]] = vs[1];
-			});
+			}); */
 			
-			var tenancyDates = (formData.tenancyDate+"").split('++~++');
+			var tenancyDates = (formData.tenancyDate+"").split('~');
 			formData.tenancyBegin = tenancyDates[0];
 			formData.tenancyEnd = tenancyDates[1];
 			
@@ -727,6 +730,9 @@
 			formData.picCidAddrStreet = lic.retailCidAddress;
 			formData.picAddrStreet = lic.retailAddress;
 			formData.lineTel = lic.retailTel;
+			formData.bizRangeIsChange = 0; //没有变更项..
+			
+			
 			
 			//企业名称是否变更
 			if($(".entNameIsChange").is(":checked")){
@@ -740,7 +746,12 @@
 			}else{
 				formData.picIsChange = 0;
 			}
-			//
+			//经济类型是否变更
+			if($(".ecoTypeIsChange").is(":checked")){
+				formData.ecoTypeIsChange = 1;
+			}else{
+				formData.ecoTypeIsChange = 0;
+			}
 			
 			
 			//picIsChange
@@ -772,13 +783,14 @@
 				url:cfg.basePath+"/licPreGns/submitApplyZJ",
 				data:{jsonStr:JSON.stringify(postData)},
 				ok:function(msg){
+					
 					//msg.data
 					//缓存信息在sessio中
 					$.ajaxPost({
 						url: '${webPath}/saveReply',
 						data:{preAcceptUuid:msg.data.preAcceptUuid,reply:JSON.stringify(msg.data)},
 						ok:function(){
-							window.location.href = '${webPath}/reply/new?id='+msg.data.preAcceptUuid;
+							//window.location.href = '${webPath}/reply/new?id='+msg.data.preAcceptUuid;
 						}
 					});
 				}

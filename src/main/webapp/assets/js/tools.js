@@ -47,7 +47,7 @@
 			 * 获取经济类型
 			 **/
 			getEcoTypeByCode:function(code) {
-			  let name = '';
+			  var name = '';
 			  
 			  $(ecoType).each(function(i,v){
 				   if (code === v.value) {
@@ -122,7 +122,7 @@
 			 *获取queryString的参数
 			 **/
 			getQueryParam:function(name) {
-			  let queryString = location.search;
+			  var queryString = location.search;
 			  if (!queryString) {
 			    return {};
 			  }
@@ -154,7 +154,7 @@
 			  }
 			  var cookies = cookieStr.split(';');
 			  var cookieJson = { size: 0 };
-			  let size = 0;
+			  var size = 0;
 			  $(cookies).each(function(i,v){
 				  var ck = v.split('=');
 				  cookieJson[ck[0].trim()] = ck[1].trim();
@@ -216,9 +216,32 @@
 	
 	
 	
+	//var serialize = $.fn.serialize;
 	
 	
 	$.fn.extend({
+		
+		/**
+		 *jquery 的from..serialize(); 会将中文
+		 *urlencode 预期不希望 如果传递true 则 转回正常的格式 
+		 * 
+		 * flag 是否转义
+		 **/
+		getFormData:function(flag){
+			/*var data = this.serialize();
+			var formData = {};
+			var datas = data.split('&');
+			$(datas).each(function(i,v){
+				var vs = v.split('=');
+				formData[vs[0]] = decodeURI(vs[1]);
+			});*/
+			var formData = {};
+			this.find('*[name]').each(function(i,v){
+				var val = $(v).attr('value');
+				formData[this.name] = val ? val : $(v).val();
+			});
+			return formData;
+		},
 		
 		//下拉选
 		/**
@@ -310,6 +333,7 @@
 			});
 			
 		},
+		//地址的三联选择 目前没有默认地址的功能
 		dist:function(){
 			var target = $(this);
 			target.attr("readOnly",true);

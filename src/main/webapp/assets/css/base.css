@@ -175,12 +175,21 @@ li {
 	display: none;
 }
 
-input[disabled], select[disabled], textarea[disabled] {
+
+
+input[disabled], select[disabled], textarea[disabled] ,li.disabled,span.disabled,input.disabled,button.disabled{
 	color: #ccc !important;
 	background-color: #f7f7f7 !important;
 	border-color: #d9d9d9 !important;
 	cursor: not-allowed !important;
 }
+
+body .radio,.radioBody input{
+	border: none !important;
+	border-color: none !important;
+	background: none !important;
+}
+
 
 .realContent {
 	width: 100%;
@@ -278,6 +287,7 @@ body .otherEcoType {
 	padding-top: 0px;
 	cursor: pointer;
 }
+
 
 .col-12 {
 	width: 50%;
@@ -453,11 +463,6 @@ body .checkboxContainer .content {
 	top: 10px;
 	right: 30px;
 }
-
-
-/*   success: {'backgroundPosition':'-25px -20px',width:'26px',height:'26px'},
-    error: {'backgroundPosition':'-52px -20px',width:'26px',height:'26px'}, */
-
 input.error{
 	border: 1px solid red;
 }
@@ -470,7 +475,7 @@ body label.error{
 	padding-left: 125px;
 	color: red;
 	position: absolute;
-	top:35px;
+	top:30px;
 	left: 5px;
 }
 

@@ -140,10 +140,8 @@
 
 									<div class="row">
 										<div class="col col-24 ">
-											<label class="ecoTypeLable">租赁/无偿使用期限</label> <input
-												name='tenancyDate' style="width: 250px;" class='tenancyDate' />
-											<input type='checkbox'  class='changqi'>
-											长期
+											<label class="ecoTypeLable">租赁/无偿使用期限</label>
+											<input name='tenancyDate' style="width: 250px;" class='tenancyDate disabled' disabled = "disabled"/>
 										</div>
 									</div>
 									
@@ -166,7 +164,7 @@
 									
 									
 									<div class="sectionDiv disabled" style="float: left;">
-										<div class="sectionTitle"><input class="checkbox" class="picIsChange" type="checkbox" />法定代表人(负责人)、经营者姓名变更</div>
+										<div class="sectionTitle"><input class="checkbox picIsChange"  type="checkbox" />法定代表人(负责人)、经营者姓名变更</div>
 										<div class="row faren" style="margin-top: 20px;">
 											<div class=" col" style="width: 50%">
 												<input name='newPicName' disabled="disabled"  class="disabled" style="width: 385px" placeholder='法定代表人(负责人)、经营者姓名' />
@@ -186,11 +184,11 @@
 										<div class="col col-24">
 											<label style="float: left;">经营地址类型变更</label> 
 											<p style="float: left; margin-top: 10px;">
-												<input style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio" value="1">
+												<input style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio" value="1" class='radio' >
 												<span>经营地址名称变更（仅适用于经营地址名称的变更；实际地址发生改变的，请申请新办。）</span>
 											</p>
 											<p style="float: left;">
-												<input  style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio" value="2">
+												<input  style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio" value="2" class='radio' >
 												<span>拆迁导致的经营地址变更（仅适用于因道路规划、城市建设等客观原因造成的经营地址改变。）</span>
 											</p>
 										</div>
@@ -385,6 +383,9 @@
 		
 		
 	
+	console.log($.getQueryParam());
+	
+		
 	//layer.myerror();
 	 //订阅user对应的 对象	
 	 pubsub.subscribe("user",function(key,data){
@@ -402,7 +403,8 @@
 	});
 	$(".tenancyDate").asDatepicker({
 		lang : 'zh',
-		mode : 'range'
+		mode : 'range',
+		initVal:''
 	});
 	
 	$('#distpicker').distpicker({
@@ -487,6 +489,7 @@
 			return false;
 		}
 		
+
 		if (!val) {
 			radio.prop('checked', 'true');
 			$(this).data('checked', 1);
@@ -494,15 +497,29 @@
 			radio.prop('checked', 'false');
 			$(this).data('checked', 0);
 		}
+	
+		var name = radio.attr('name');
+		
 		var radioVal = radio.val();
-		if (radioVal == '1410') {
-			$('.otherEcoType').show();
-		} else {
-			$('.otherEcoType').hide();
+		if(name=='placeOwnership'){
+			//2502
+			if (radioVal == '2502') {
+				$('.tenancyDate').removeAttr('disabled').removeClass('disabled');
+			} else {
+				$('.tenancyDate').attr('disabled','disabled').addClass('disabled').val('');
+			}
+			
+		}else{
+			if (radioVal == '1410') {
+				$('.otherEcoType').show();
+			} else {
+				$('.otherEcoType').hide();
+			}
 		}
+
 	});
 		
-
+	
 	$(".layui-form").validate({
 		rules : {
 			entName : "required",
@@ -530,7 +547,11 @@
 			postAddrAdc : 'required',
 			postAddrStreet : 'required',
 			retailLicNo:"required",
-			newEntName:"required"
+			newEntName:"required",
+			newPicName:{
+				required:".picIsChange:checked",
+				maxlength:6
+			}
 
 		},
 		messages : {
@@ -553,7 +574,11 @@
 			postAddrAdc : '请选择邮寄地址',
 			postAddrStreet : '请选择邮寄地址详情',
 			retailLicNo:"请选择许可证号",
-			newEntName:"请输入新的企业/字号名称"
+			newEntName:"请输入新的企业/字号名称",
+			newPicName:{
+				required:"法定代表人(负责人)、经营者姓名",
+				maxlength:"法定代表人(负责人)、经营者姓名最长不得超过6个字"
+			}
 		},
 		onkeyup : function(a, b) {
 			$.validator.defaults.onkeyup.call(this, a, b);
@@ -705,13 +730,6 @@
 			
 			var  formData = $(".layui-form").getFormData();
 			
-			/* var formData = {};
-			var datas = data.split('&');
-			$(datas).each(function(i,v){
-				var vs = v.split('=');
-				formData[vs[0]] = vs[1];
-			}); */
-			
 			var tenancyDates = (formData.tenancyDate+"").split('~');
 			formData.tenancyBegin = tenancyDates[0];
 			formData.tenancyEnd = tenancyDates[1];
@@ -754,29 +772,6 @@
 				formData.ecoTypeIsChange = 0;
 			}
 			
-			
-			//picIsChange
-			
-			//entNameIsChange
-			/**
-		    "newEntName":"",
-	        "picIsChange":"0",
-	        "newPicName":"",
-	        "bizAddrIsChange":"0",
-	        "newBizAddrStreet":"",
-	        "bizRangeIsChange":0,
-	        "ecoTypeIsChange":"0",
-	        "newEcoTypeOther":"",
-	        "postAddrAdc":"330000,330100,330101",
-	        "postAddrStreet":"浙江省杭州市市辖区 3123123",
-	        "postLinkName":"周宇",
-	        "postLinkTel":"13179140612",
-	        "addrChangeReason":"",
-	        "newBizAddrAdc":",,",
-			
-			*/
-			
-			
 			//获取行政区划
 			
 			var  postData = {rlicPreAcceptInfo: formData, applyMaterialArray: fileData};
@@ -791,7 +786,7 @@
 						url: '${webPath}/saveReply',
 						data:{preAcceptUuid:msg.data.preAcceptUuid,reply:JSON.stringify(msg.data)},
 						ok:function(){
-							//window.location.href = '${webPath}/reply/new?id='+msg.data.preAcceptUuid;
+							window.location.href = '${webPath}/reply/change?id='+msg.data.preAcceptUuid;
 						}
 					});
 				}

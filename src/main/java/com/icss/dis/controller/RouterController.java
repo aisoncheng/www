@@ -33,12 +33,17 @@ public class RouterController {
 		return "condition/condition";
 	}
 	
+	@RequestMapping("/list/{pifx}")
+	public  String list(@PathVariable("pifx") String pifx){
+		return "list/list";
+	}
+	
 	//存放提交成功后的 数据
 	@ResponseBody
 	@RequestMapping("/saveReply")
 	public  Object saveReply(HttpServletRequest request,String reply,String preAcceptUuid){
 		request.getSession().setAttribute(preAcceptUuid, reply);
-		return "{code:200,message:'成功'}";
+		return  ResponseResult.SUCCESS;
 	}
 	
 	//存放提交成功后的 数据

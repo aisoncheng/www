@@ -60,6 +60,9 @@
 			},
 			ajaxPost:function(param){
 				 jQuery.support.cors = true;
+				 if(param.url.indexOf('http://')==-1){
+					 param.url = cfg.basePath+param.url;
+				 }
 				 $.ajax({
 					 headers: {
 						 accesstoken: $.getCookieAcce(),
@@ -71,7 +74,7 @@
 					 dataType:'json',
 					 success:function(msg){
 						
-						 if(msg.code!=200){
+						 if(msg.code!=200||msg.code!='200'){
 							 layer.alert(msg.message,{title:'友情提醒'});
 						 }
 						 param.ok && param.ok(msg);
@@ -225,6 +228,20 @@
 	
 	$.fn.extend({
 		
+		
+		/**
+		 * 
+		 *获取表单参数 
+		 **/
+		getFormData:function(){
+			var fromData = {};
+			$(this).find('*[name]').each(function(){
+				var v = $(this).val();
+				fromData[this.name] = v;
+			});
+			return fromData;
+		},
+		
 		//下拉选
 		/**
 		 * 
@@ -233,12 +250,33 @@
 		 *{data:数据数组,key:展示哪个字段,valKey:指是哪个字段}
 		 **/
 		select:function(param){
-			var target = $(this);
+		   var target = $(this);
 			
 			var width = target.outerWidth();
 			var pos = target.offset();
 			var height = target.outerHeight();
+
+			var parent = target.parent();
+			target.css({position:"relative"});
+			var text = $("<span id='"+target.attr('name')+"'></span>");
 			
+
+			//console.log(target.css);
+			
+			text.css({width:(width-9)+'px',height:(height-4)+'px','display':'block','position':'absolute','top':(pos.top+2)+'px',
+					 'left':(pos.left+2)+'px','z-index':'888',"backgroundColor":"#fff","lineHeight":height+"px",'padding-left':'5px'});
+			
+			$("body").append(text);
+
+			
+			if(target.hasClass('disabled')||target.attr('disabled')){
+				text.addClass('disabled');
+			}
+			
+			if(param.initVal){
+				target.val(param.initVal[param.valKey]);//.attr('data-value',param.initVal[param.valKey]);
+				text.html(param.initVal[param.key]);
+			}
 			
 		
 			var mySelect = $("<div class='mySelect' style='width:"+width+"px;height:200px;top:"+(pos.top+height+5)+"px;left:"+pos.left+"px;display:none;'>"+
@@ -263,7 +301,10 @@
 			}
 			
 			var  flag = false;
-			target.click(function(){
+			text.click(function(){
+				if(target.hasClass('disabled')){
+					return false;
+				}
 				if(mySelect.css('display')=='none'){
 					mySelect.show();
 				}else{
@@ -272,27 +313,29 @@
 			});
 			
 			mySelect.on("click","li",function(){
-				
 				var data = $(this).data('data');
 				param.cb && param.cb(data);
-				
 				var val = $(this).attr("value");
 				if($(this).hasClass('disabled')){
 					return false;
 				}else{
-					target.val(val);
+					target.val(data[param.valKey]);
+					text.html(data[param.key]);
 					mySelect.hide();
 				}
 			});
 			
-			
 			$(document).click(function(e){
-				if($(e.target).parents('.mySelect').length==0 && !$(e.target).is(target)){
+				if($(e.target).parents('.mySelect').length==0 && !$(e.target).is(text)){
 					mySelect.hide();
 				}
 			});
 			
 		},
+		/**
+		 *地址的三联选择 
+		 *添加一个span 在上层挡住input 这样值就是code 而不是中文
+		 **/
 		dist:function(){
 			var target = $(this);
 			target.attr("readOnly",true);
@@ -301,6 +344,7 @@
 			var dist = $("<div class='dist'></div>");
 			$("body").append(dist);
 			var height = $(this).outerHeight();
+			var width = $(this).outerWidth();
 			dist.css({"top":(position.top+height+5)+'px',"left":position.left});
 			
 			//生成第一个ul
@@ -308,9 +352,18 @@
 			dist.append(ul);
 			
 			
+			//添加一个span
+			target.css({position:"relative"});
+			var text = $("<span id='"+target.attr('name')+"'></span>");
+			text.css({width:(width-9)+'px',height:(height-4)+'px','display':'block','position':'absolute','top':(position.top+2)+'px',
+					 'left':(position.left+2)+'px','z-index':'888',"backgroundColor":"#fff","lineHeight":height+"px",'padding-left':'5px'});
+			$("body").append(text);
+			
+			
+			
 			var flag = true;
-			target.click(function(){
-				console.log(flag);
+			text.click(function(){
+				
 				if(flag){
 					dist.show();
 					dist.animate({height:250},200,function(){
@@ -346,13 +399,13 @@
 						dist.hide();
 						flag = !flag;
 					});
-					target.val(infos.name.join('/'));
-					target.attr('data-code',infos.code.join(','));
+					text.html(infos.name.join('/'));
+					target.val(infos.code.join(','));
 				}
 			});
 			
 			$(document).click(function(e){
-				if($(e.target).parents('.dist').length==0 && !$(e.target).is(target)){
+				if($(e.target).parents('.dist').length==0 && !$(e.target).is(text)){
 					dist.hide();
 				}
 			});

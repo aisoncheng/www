@@ -354,23 +354,6 @@
 			 $(".lineTel").val(data.mobile);
 			 console.log(data);
 		 });
-		// alert("加载许可证" + $.getApplyTypCode());
-		$.ajax({
-			 headers: {
-				 accesstoken: '8aac95e05e13632c015e2661cab9000d',
-				 orgCode: '10330101'
-			 },
-			 url:cfg.basePath+'/licPreGns/findTLicRlicInfoListZJ',
-			 type:'post',
-			 data:{'applyType':$.getApplyTypCode()},
-			 dataType:'json',
-			 success:function(msg){
-				 alert("加载成功");
-			 },
-			 error:function(msg){
-				 alert("加载失败");
-			 }
-		 });
 		//查询许可证信息
 		 $.ajaxPost({
 			url:cfg.basePath+'/licPreGns/findTLicRlicInfoListZJ',

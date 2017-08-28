@@ -53,8 +53,8 @@
 			ajaxPost:function(param){
 				 $.ajax({
 					 headers: {
-						 accesstoken: '8aac95e05e13632c015e2661cab9000d',
-						 orgCode: '10330101'
+						 accesstoken: $.getCookieAcce(),
+						 orgCode: $.getCookieOrg()
 					 },
 					 url:param.url,
 					 type:param.type||'post',

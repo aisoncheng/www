@@ -23,6 +23,7 @@
 	position: absolute;
 	top: 11px;
 	right: 30px;
+	right: 43px\9;
 }
 </style>
 </head>
@@ -141,7 +142,7 @@
 										<div class="col col-24 ">
 											<label class="ecoTypeLable">租赁/无偿使用期限</label> <input
 												name='tenancyDate' style="width: 250px;" class='tenancyDate' />
-											<input type='checkbox' name='changqi' class='changqi'>
+											<input type='checkbox'  class='changqi'>
 											长期
 										</div>
 									</div>
@@ -154,7 +155,7 @@
 									
 									
 									<div class="sectionDiv disabled" style="float: left;">
-										<div class="sectionTitle"><input class="checkbox" name="entNameIsChange" type="checkbox" />企业(字号)名称变更</div>
+										<div class="sectionTitle"><input class="checkbox" class="entNameIsChange" type="checkbox" />企业(字号)名称变更</div>
 										<div class="row" style="margin-top: 20px;">
 											<div class="col col-24">
 												<label>企业（字号）名称</label> 
@@ -165,33 +166,31 @@
 									
 									
 									<div class="sectionDiv disabled" style="float: left;">
-										<div class="sectionTitle"><input class="checkbox" name="entNameIsChange" type="checkbox" />法定代表人(负责人)、经营者姓名变更</div>
+										<div class="sectionTitle"><input class="checkbox" class="picIsChange" type="checkbox" />法定代表人(负责人)、经营者姓名变更</div>
 										<div class="row faren" style="margin-top: 20px;">
 											<div class=" col" style="width: 50%">
-												<input name='newEntName' disabled="disabled"  class="disabled" style="width: 385px" placeholder='法定代表人(负责人)、经营者姓名' />
+												<input name='newPicName' disabled="disabled"  class="disabled" style="width: 385px" placeholder='法定代表人(负责人)、经营者姓名' />
 											</div>
 											<div class=" col" style="width: 20%">
-												<select style="width: 160px;height: 30px;">
-													<option>身份证</option>
-												</select>
+												<input  name="newPicCidType"  style="width: 143px;" class='newPicCidType disabled' disabled="disabled"/>
 											</div>
 											<div class=" col" style="width: 30%">
-												<input name='newEntName' disabled="disabled"  class="disabled" style="width: 225px;" placeholder='身份证号码'  />
+												<input name='newPicCidNo' disabled="disabled"  class="disabled" style="width: 225px;" placeholder='身份证号码'  />
 											</div>
 										</div>
 									</div>
 									
 									
 									<div class="sectionDiv disabled" style="float: left;">
-										<div class="sectionTitle"><input class="checkbox" name="bizAddrIsChange" type="checkbox" />经营地址名称变更</div>
+										<div class="sectionTitle"><input class="checkbox bizAddrIsChange" type="checkbox" />经营地址名称变更</div>
 										<div class="col col-24">
 											<label style="float: left;">经营地址类型变更</label> 
 											<p style="float: left; margin-top: 10px;">
-												<input style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio">
+												<input style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio" value="1">
 												<span>经营地址名称变更（仅适用于经营地址名称的变更；实际地址发生改变的，请申请新办。）</span>
 											</p>
 											<p style="float: left;">
-												<input  style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio">
+												<input  style="width: 14px;height: 14px;" name="addrChangeReason"  type="radio" value="2">
 												<span>拆迁导致的经营地址变更（仅适用于因道路规划、城市建设等客观原因造成的经营地址改变。）</span>
 											</p>
 										</div>
@@ -209,44 +208,44 @@
 									
 									
 									<div class="sectionDiv disabled" style="float: left;">
-										<div class="sectionTitle"><input class="checkbox" name="entNameIsChange" type="checkbox" />变更经济类型</div>
+										<div class="sectionTitle"><input class="checkbox ecoTypeIsChange"  type="checkbox" />变更经济类型</div>
 										<div class="row">
 										<div class="col col-24 " style="margin-top: 30px;">
 											<label class="ecoTypeLable">经济类型</label>
 											<div class="ecoType">
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1401" /><span>国有</span>
+													<input name='newEcoType' type='radio' value="1401" /><span>国有</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1402" /><span>集体</span>
+													<input name='newEcoType' type='radio' value="1402" /><span>集体</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1403" /><span>个体</span>
+													<input name='newEcoType' type='radio' value="1403" /><span>个体</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1404" /><span>合伙</span>
+													<input name='newEcoType' type='radio' value="1404" /><span>合伙</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1405" /><span>股份制(合作)</span>
+													<input name='newEcoType' type='radio' value="1405" /><span>股份制(合作)</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1406" /><span>个人独资</span>
+													<input name='newEcoType' type='radio' value="1406" /><span>个人独资</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1407" /><span>有限责任</span>
+													<input name='newEcoType' type='radio' value="1407" /><span>有限责任</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1408" /><span>外商投资</span>
+													<input name='newEcoType' type='radio' value="1408" /><span>外商投资</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1409" /><span>股份有限公司</span>
+													<input name='newEcoType' type='radio' value="1409" /><span>股份有限公司</span>
 												</div>
 												<div class="radioBody">
-													<input name='ecoType' type='radio' value="1410" /><span>其他</span>
+													<input name='newEcoType' type='radio' value="1410" /><span>其他</span>
 												</div>
 												<div>
-													<input name='ecoTypeOther' style="width: 80px;"
-														class='hidden otherEcoType' />
+													<input name='newEcoTypeOther' style="width: 80px;"
+														class='hidden newEcoTypeOther' />
 												</div>
 											</div>
 										</div>
@@ -384,15 +383,16 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
+		
+	
 	//layer.myerror();
 	 //订阅user对应的 对象	
 	 pubsub.subscribe("user",function(key,data){
 		 $(".picName").val(data.username);
 		 $(".lineTel").val(data.mobile);
-		 console.log(data);
 	 });
-		
-		
+	
+	$(".newPicCidType").select({data:$.picType,key:'label',valKey:'value',initVal:{ label:'身份证',value:2801 }});
 	$('.postAddrAdc').dist();
 	$("input[name='newBizAddrAdc']").dist();
 	
@@ -411,147 +411,184 @@
 	});
 
 		
-		
-		
-		//查询许可证信息
-		 $.ajaxPost({
-			url:cfg.basePath+'/licPreGns/findTLicRlicInfoListZJ',
-			data:{applyType:$.getApplyTypCode()},
-			ok:function(msg){
-				var lics = msg.data;
-				$(".retailLicNoDiv img").hide();
-				
-				$(".retailLicNoDiv .retailLicNo").removeClass('disabled').removeAttr('disabled');
-				
-				if(lics.length==0){
-					layer.myerror('没有查找到许可证信息不能办理该业务');
-					return false;
-				}
-				for(var i=0;i<lics.length;i++){
-					lics[i].disabled = lics[i].isCanApply=='0' ? true:false;
-				}
-				$(".retailLicNo").select({data:lics,key:'licNo',valKey:'licNo',cb:function(data){
-					if(data.disabled){
-						layer.myerror("证号为【"+data.licNo+"】的许可证不可办理此业务,原因：【"+data.notApplyReason+"】");
-					}else{
-						$(".entNameLic").val(data.companyName);
-						$(".managerNameLic").val(data.managerName);
-						$(".bizAddrStreetLic").val(data.businessAddr);
-						$(".ecoTypeLic").val(data.ecoTypeOther ? data.ecoTypeOther : $.getEcoTypeByCode(data.ecoType));
-					}	
-				}});
+	var lic = {};
+	//查询许可证信息
+	 $.ajaxPost({
+		url:cfg.basePath+'/licPreGns/findTLicRlicInfoListZJ',
+		data:{applyType:$.getApplyTypCode()},
+		ok:function(msg){
+			var lics = msg.data;
+			$(".retailLicNoDiv img").hide();
+			
+			$(".retailLicNoDiv .retailLicNo").removeClass('disabled').removeAttr('disabled');
+			
+			if(lics.length==0){
+				layer.myerror('没有查找到许可证信息不能办理该业务');
+				return false;
 			}
-		});
-		
-		
-		
-		//处理各种点击启用禁用
-		
-		
-		
-		
-		$(".radioBody").click(function() {
-			var val = $(this).data('checked');
-			var radio = $(this).find("input[type='radio']");
-			if (!val) {
-				radio.prop('checked', 'true');
-				$(this).data('checked', 1);
-			} else {
-				radio.prop('checked', 'false');
-				$(this).data('checked', 0);
+			for(var i=0;i<lics.length;i++){
+				lics[i].disabled = lics[i].isCanApply=='0' ? true:false;
 			}
-			var radioVal = radio.val();
-			if (radioVal == '1410') {
-				$('.otherEcoType').show();
-			} else {
-				$('.otherEcoType').hide();
-			}
-		});
+			$(".retailLicNo").select({data:lics,key:'licNo',valKey:'licNo',cb:function(data){
+				if(data.disabled){
+					layer.myerror("证号为【"+data.licNo+"】的许可证不可办理此业务,原因：【"+data.notApplyReason+"】");
+				}else{
+					lic = data;
+					console.log(lic);
+					$(".entNameLic").val(data.companyName);
+					$(".managerNameLic").val(data.managerName);
+					$(".bizAddrStreetLic").val(data.businessAddr);
+					$(".ecoTypeLic").val(data.ecoTypeOther ? data.ecoTypeOther : $.getEcoTypeByCode(data.ecoType));
+					$("input[name='biId']").val(data.induCommBusinessLicenceNumber);
+				}	
+			}});
+		}
+	});
+		
+		
+	//初始化的时候禁用所有	
+	$(".sectionDiv *").not(".sectionTitle").addClass('disabled').attr("disabled","disabled");
+		
+		
+	//处理各种点击启用禁用
+	$(".sectionTitle").click(function(e){
+		 var checkbox = $(this).find("input[type='checkbox']");
+		 var target = $(e.target);
+		 if(!target.hasClass('checkbox')){
+			 if(checkbox.is(":checked")){
+				 checkbox.prop('checked',false);
+			 }else{
+				 checkbox.prop('checked',true);
+			 }
+		 }else{
+			 checkbox = target;
+		 }
+		
+		var parent = checkbox.parents(".sectionDiv");
+		var checked = checkbox.is(":checked");
+		
+		if(checked){
+			parent.removeClass('disabled').removeAttr("disabled");
+			parent.find('*').not(".sectionTitle,.newPicCidType").removeClass('disabled').removeAttr("disabled");
+		}else{
+			parent.addClass('disabled').attr("disabled","disabled");
+			parent.find('*').not(".sectionTitle,.newPicCidType").addClass('disabled').attr("disabled","disabled").val('');
+			parent.find('.icon').hide();
+		}
+	});
+		
+		
+	$(".radioBody").click(function() {
+		var val = $(this).data('checked');
+		var radio = $(this).find("input[type='radio']");
+		
+		if(radio.hasClass('disabled')){
+			return false;
+		}
+		
+		if (!val) {
+			radio.prop('checked', 'true');
+			$(this).data('checked', 1);
+		} else {
+			radio.prop('checked', 'false');
+			$(this).data('checked', 0);
+		}
+		var radioVal = radio.val();
+		if (radioVal == '1410') {
+			$('.otherEcoType').show();
+		} else {
+			$('.otherEcoType').hide();
+		}
+	});
 		
 
-		$(".layui-form").validate({
-			rules : {
-				entName : "required",
-				bizaddrStreet : "required",
-				bizAddrAdc:"required",
-				ecoType : "required",
-				bizId : "required",
-				biPeriod : "required",
-				placeOwnership : "required",
-				tenancyDate : {
-					required : function() {
-						return $(".changqi:checked").length > 0 ? false : true;
-					}
-				},
-				otherEcoType : {
-					required : true
-				},
-				picName : 'required',
-				picCidType : 'required',
-				picCidNo : 'required',
-				picCidAddrStreet : 'required',
-				picAddrStreet : 'required',
-				linkName : "required",
-				lineTel : 'required',
-				postAddrAdc : 'required',
-				postAddrStreet : 'required'
+	$(".layui-form").validate({
+		rules : {
+			entName : "required",
+			bizaddrStreet : "required",
+			bizAddrAdc:"required",
+			ecoType : "required",
+			bizId : "required",
+			biPeriod : "required",
+			placeOwnership : "required",
+			tenancyDate : {
+				required : function() {
+					return $(".changqi:checked").length > 0 ? false : true;
+				}
+			},
+			otherEcoType : {
+				required : true
+			},
+			picName : 'required',
+			picCidType : 'required',
+			picCidNo : 'required',
+			picCidAddrStreet : 'required',
+			picAddrStreet : 'required',
+			linkName : "required",
+			lineTel : 'required',
+			postAddrAdc : 'required',
+			postAddrStreet : 'required',
+			retailLicNo:"required",
+			newEntName:"required"
 
-			},
-			messages : {
-				entName : "请输入企业名称",
-				bizaddrStreet : "请输入经营地址",
-				bizAddrAdc:"请选择经营地址",
-				ecoType : "请选择经济类型",
-				bizId : "请输入工商营业执照",
-				biPeriod : "请选择工商营业执照时间",
-				placeOwnership : "请选择场地归属",
-				tenancyDate : "请选择租赁时间范围",
-				otherEcoType : "请输入其他经济类型",
-				picName : "请输入负责人姓名",
-				picCidType : '请选择证件类型',
-				picCidNo : '请输入证件号码',
-				picCidAddrStreet : '请输入身份证住址',
-				picAddrStreet : '请输入现住地址',
-				linkName : "请输入联系人",
-				lineTel : '请输入联系人电话',
-				postAddrAdc : '请选择邮寄地址',
-				postAddrStreet : '请选择邮寄地址详情'
-			},
-			onkeyup : function(a, b) {
-				$.validator.defaults.onkeyup.call(this, a, b);
-				var name = a.name;
-				//不合法
-				var parent = $(a).parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					$(a).after("<i class='icon'></i>");
-				}
-				if (this.invalid[name]) {
-					icon.removeClass('success').addClass('error');
-				} else {
-					icon.removeClass('error').addClass('success');
-				}
-			},
-			success : function(a, b) {
-				var parent = $(a).parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					$(a).after("<i class='icon success'></i>");
-				} else {
-					icon.removeClass('error').addClass('success');
-				}
-			},
-			errorPlacement : function(error, element) {
-				error.appendTo(element.parent());
-				var parent = element.parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					parent.append("<i class='icon error'></i>");
-				} else {
-					icon.removeClass('success').addClass('error');
-				}
+		},
+		messages : {
+			entName : "请输入企业名称",
+			bizaddrStreet : "请输入经营地址",
+			bizAddrAdc:"请选择经营地址",
+			ecoType : "请选择经济类型",
+			bizId : "请输入工商营业执照",
+			biPeriod : "请选择工商营业执照时间",
+			placeOwnership : "请选择场地归属",
+			tenancyDate : "请选择租赁时间范围",
+			otherEcoType : "请输入其他经济类型",
+			picName : "请输入负责人姓名",
+			picCidType : '请选择证件类型',
+			picCidNo : '请输入证件号码',
+			picCidAddrStreet : '请输入身份证住址',
+			picAddrStreet : '请输入现住地址',
+			linkName : "请输入联系人",
+			lineTel : '请输入联系人电话',
+			postAddrAdc : '请选择邮寄地址',
+			postAddrStreet : '请选择邮寄地址详情',
+			retailLicNo:"请选择许可证号",
+			newEntName:"请输入新的企业/字号名称"
+		},
+		onkeyup : function(a, b) {
+			$.validator.defaults.onkeyup.call(this, a, b);
+			var name = a.name;
+			//不合法
+			var parent = $(a).parent();
+			var icon = parent.find('i.icon');
+			if (icon.length == 0) {
+				$(a).after("<i class='icon'></i>");
 			}
-		});
+			if (this.invalid[name]) {
+				icon.removeClass('success').addClass('error');
+			} else {
+				icon.removeClass('error').addClass('success');
+			}
+		},
+		success : function(a, b) {
+			var parent = $(a).parent();
+			var icon = parent.find('i.icon');
+			if (icon.length == 0) {
+				$(a).after("<i class='icon success'></i>");
+			} else {
+				icon.removeClass('error').addClass('success');
+			}
+		},
+		errorPlacement : function(error, element) {
+			error.appendTo(element.parent());
+			var parent = element.parent();
+			var icon = parent.find('i.icon');
+			if (icon.length == 0) {
+				parent.append("<i class='icon error'></i>");
+			} else {
+				icon.removeClass('success').addClass('error');
+			}
+		}
+	});
 
 		
 		
@@ -665,24 +702,78 @@
 				return false;
 			}
 			
-			var  data = $(".layui-form").serialize();
+			var  formData = $(".layui-form").getFormData();
 			
-			var formData = {};
+			/* var formData = {};
 			var datas = data.split('&');
 			$(datas).each(function(i,v){
 				var vs = v.split('=');
 				formData[vs[0]] = vs[1];
-			});
+			}); */
 			
-			var tenancyDates = (formData.tenancyDate+"").split('++~++');
+			var tenancyDates = (formData.tenancyDate+"").split('~');
 			formData.tenancyBegin = tenancyDates[0];
 			formData.tenancyEnd = tenancyDates[1];
+			
 			delete formData.tenancyDate;
-			formData.postLinkName = user.username;
-			formData.postLinkTel = user.mobile;
-			formData.applyType = '1001';
+			formData.applyType = '1002';
 			formData.bizRange = '1501,1502';
 			formData.bizAddrAdc = $("input[name='bizAddrAdc']").attr('data-code');
+			
+			formData.entName = lic.companyName; // 填充额外的信息
+			formData.bizAddrAdc = lic.rlicAdcFull;
+			formData.bizAddrStreet = lic.retailAddress;
+			formData.ecoType = lic.ecoType;
+			formData.ecoTypeOther = lic.ecoTypeOther;
+			formData.picCidType = lic.retailCidType;
+			formData.picCidNo = lic.retailCidNo;
+			formData.picCidAddrStreet = lic.retailCidAddress;
+			formData.picAddrStreet = lic.retailAddress;
+			formData.lineTel = lic.retailTel;
+			formData.bizRangeIsChange = 0; //没有变更项..
+			
+			
+			
+			//企业名称是否变更
+			if($(".entNameIsChange").is(":checked")){
+				formData.entNameIsChange = 1;
+			}else{
+				formData.entNameIsChange = 1;
+			}
+			//法人等是否变更
+			if($(".picIsChange").is(":checked")){
+				formData.picIsChange = 1;
+			}else{
+				formData.picIsChange = 0;
+			}
+			//经济类型是否变更
+			if($(".ecoTypeIsChange").is(":checked")){
+				formData.ecoTypeIsChange = 1;
+			}else{
+				formData.ecoTypeIsChange = 0;
+			}
+			
+			
+			//picIsChange
+			
+			//entNameIsChange
+			/**
+		    "newEntName":"",
+	        "picIsChange":"0",
+	        "newPicName":"",
+	        "bizAddrIsChange":"0",
+	        "newBizAddrStreet":"",
+	        "bizRangeIsChange":0,
+	        "ecoTypeIsChange":"0",
+	        "newEcoTypeOther":"",
+	        "postAddrAdc":"330000,330100,330101",
+	        "postAddrStreet":"浙江省杭州市市辖区 3123123",
+	        "postLinkName":"周宇",
+	        "postLinkTel":"13179140612",
+	        "addrChangeReason":"",
+	        "newBizAddrAdc":",,",
+			
+			*/
 			
 			
 			//获取行政区划
@@ -692,13 +783,14 @@
 				url:cfg.basePath+"/licPreGns/submitApplyZJ",
 				data:{jsonStr:JSON.stringify(postData)},
 				ok:function(msg){
+					
 					//msg.data
 					//缓存信息在sessio中
 					$.ajaxPost({
 						url: '${webPath}/saveReply',
 						data:{preAcceptUuid:msg.data.preAcceptUuid,reply:JSON.stringify(msg.data)},
 						ok:function(){
-							window.location.href = '${webPath}/reply/new?id='+msg.data.preAcceptUuid;
+							//window.location.href = '${webPath}/reply/new?id='+msg.data.preAcceptUuid;
 						}
 					});
 				}

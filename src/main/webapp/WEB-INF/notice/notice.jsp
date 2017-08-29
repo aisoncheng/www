@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@include file="../base/base.jsp"%>
-<title>Insert title here</title>
+
 <link href="${webPath}/assets/css/notice.css" type="text/css" rel="stylesheet"> 
 </head>
 <body>

@@ -16,7 +16,7 @@
 	rel="stylesheet">
 <link href="${webPath}/assets/css/upload.css" type="text/css"
 	rel="stylesheet">
-<title>Insert title here</title>
+
 
 <style type="text/css">
 .formButtons {

@@ -24,10 +24,11 @@
 
 .uploadRow .labelCol .fileLable {
 	display: block;
-	height: 110px;
-	line-height: 110px;
+	/* height: 110px;
+	line-height: 110px; */
 	width: 100%;
 	text-align: center;
+	padding-top: 45px;
 }
 
 

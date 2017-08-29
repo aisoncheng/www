@@ -10,7 +10,6 @@
 <script type="text/javascript" src="${webPath}/assets/js/uploadImg.js"></script>
 <link href="${webPath}/assets/css/asDatepicker.css" type="text/css" rel="stylesheet">
 <link href="${webPath}/assets/css/upload.css" type="text/css" rel="stylesheet">
-<title>烟草专卖许可证用户集成</title>
 <style type="text/css">
 
 .faren .col{

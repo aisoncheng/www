@@ -41,7 +41,13 @@
                     ];
 	
 	$.extend({
-		
+			createScript: function(src){
+				var script=document.createElement("script");  
+				script.setAttribute("type", "text/javascript");  
+				script.setAttribute("src", src);  
+				var html = document.getElementsByTagName("html");  
+				html[0].appendChild(script);  
+			},
 			picType:picType,
 		
 			/**
@@ -52,7 +58,7 @@
 			  
 			  $(ecoType).each(function(i,v){
 				   if (code === v.value) {
-				      name = info.label;
+				      name = v.label;
 				      return false;
 				   }
 			  });
@@ -182,9 +188,34 @@
 			 **/
 			getCookieOrg:function() {
 			  return $.getCookie('orgCode');
+			},
+			/**
+			 *传递行政区划编码获取中文名字 
+			 **/
+			getDistByCodes:function(codes){
+				
+				var codeArray = codes.split(',');
+				var name = "";
+				
+				var city = window.city[86];
+				
+				name +=city[codeArray[0]];
+				
+				city = window.city[codeArray[0]];
+				
+				var i = 0;
+				while(++i<codeArray.length && city){
+					if(city[codeArray[i]]){
+						name +="/"+city[codeArray[i]];
+					}
+					
+					city = window.city[codeArray[i]];
+				}
+				return name;
 			}
 			
 	 });
+	
 	
 	
 	
@@ -269,6 +300,8 @@
 			$("body").append(text);
 
 			
+			
+			
 			if(target.hasClass('disabled')||target.attr('disabled')){
 				text.addClass('disabled');
 			}
@@ -335,8 +368,10 @@
 		/**
 		 *地址的三联选择 
 		 *添加一个span 在上层挡住input 这样值就是code 而不是中文
+		 *param : {city:{},initVal:'1121,2121,21212'}  //city不传则使用默认的
 		 **/
-		dist:function(){
+		dist:function(param){
+			
 			var target = $(this);
 			target.attr("readOnly",true);
 			//定位
@@ -357,13 +392,28 @@
 			var text = $("<span id='"+target.attr('name')+"'></span>");
 			text.css({width:(width-9)+'px',height:(height-4)+'px','display':'block','position':'absolute','top':(position.top+2)+'px',
 					 'left':(position.left+2)+'px','z-index':'888',"backgroundColor":"#fff","lineHeight":height+"px",'padding-left':'5px'});
+			
+			
+			if(target.hasClass('disabled')||target.attr('disabled')){
+				text.addClass('disabled');
+			}
+			
+			
 			$("body").append(text);
+			
+			if(param && param.initVal){
+				target.val(param.initVal);
+				text.html($.getDistByCodes(param.initVal));
+			}
+			
 			
 			
 			
 			var flag = true;
 			text.click(function(){
-				
+				if(target.hasClass('disabled')){
+					return false;
+				}
 				if(flag){
 					dist.show();
 					dist.animate({height:250},200,function(){
@@ -470,6 +520,7 @@ $.setParamsCookie();
 		ok:function(msg){
 		  if(msg.code==200){
 			  console.log(msg);
+			  w.user = msg.data;
 			  pubsub.publish("user", msg.data);
 		  }
 		}

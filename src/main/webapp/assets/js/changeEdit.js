@@ -233,6 +233,7 @@ $(document).ready(function(){
 				$('.tenancyDate').removeAttr('disabled').removeClass('disabled');
 			} else {
 				$('.tenancyDate').attr('disabled','disabled').addClass('disabled').val('');
+				$('.tenancyDate').parent().find('.icon').hide();
 			}
 			
 		}else{

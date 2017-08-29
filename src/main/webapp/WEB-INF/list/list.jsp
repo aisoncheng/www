@@ -191,7 +191,7 @@
 					//显示撤回
 					if(v.preAcceptStatus !=2 && v.preAcceptStatus != -1 ){
 						var chehui = $("<a href='javascript:void(0)' class='chehui' data-id='"+v.preAcceptUuid+"' data-status='"+v.preAcceptStatus+"'>[撤回]</a>");
-						if(v.preAcceptStatus == -2 ){
+						if(v.preAcceptStatus == -2 || v.preAcceptStatus == 4){
 							chehui.addClass('disabled');
 						}
 						options.append(chehui);

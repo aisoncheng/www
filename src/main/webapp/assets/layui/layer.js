@@ -95,6 +95,11 @@
 //						"</div>");
         	
         },
+        myconfirm: function(e, t, n, a) {
+           this.confirm(e, t, n, a);
+           
+           //do some other thing
+        },
         confirm: function(e, t, n, a) {
             var s = "function" == typeof t;
             return s && (a = n,

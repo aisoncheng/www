@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <%@include file="../base/base.jsp"%>
-<title>Insert title here</title>
+
 <link href="${webPath}/assets/css/notice.css" type="text/css" rel="stylesheet"> 
 </head>
 <body>
@@ -37,7 +37,7 @@
 								</div>		
 								 
 								<div class="buttons">
-									<button type="button" class="buttonBig disabled "  data-nam ="history" msg="没有正在申请的记录"> 
+									<button type="button" class="buttonBig disabled history"  data-nam ="history" msg="没有正在申请的记录"> 
 										<span>查看当前申请</span>
 									</button>
 									<button type="button" class="buttonBig disabled nextButton"   data-name="next" msg="请勾选阅读并同意">
@@ -81,6 +81,21 @@
 		 var hasHistory = false;
 		 var layerOpen ;
 		 //
+		 
+		 //加载的时候先判断是否存在正在申请的业务
+		 $.ajaxPost({
+			 url:'/licPreGns/hasHistoryApply',
+			 data:{applyType:$.getApplyTypCode()},
+			 ok:function(msg){
+				 if(msg.code==200 && msg.data && msg.data.length>0){
+					 $(".history").removeClass('disabled').click(function(){
+						 window.open('${webPath}/list/'+$.applyType());
+					 });
+				 }
+			 }
+		 });
+		 
+		 
 		 
 		 $(".buttons .buttonBig").mouseover(function(){
 			  var msg = $(this).attr("msg");

@@ -4,7 +4,7 @@
 	
 	
 	cfg.basePath = "http://10.44.21.96:9090/REGIEAPP_LIC_WEB";
-	
+	//cfg.basePath = "http://218.75.75.132:9080/REGIEAPP_LIC_WEB";
 	
 	cfg.applyWays = {
 			  'new': {
@@ -51,6 +51,35 @@
 	
 	
 	cfg.files = {
+		change: [
+               {
+                 auto: true,
+                 materialName: '申请表',
+                 applyMaterialAttArray: {},
+                 count: 1,
+                 allowFix: 'jpg,jpeg,gif,png',
+               },
+               {
+                 materialNameTitle: 'identificationCard1',
+                 fileSeqNo: 0,
+                 isFileCatalog: 1,
+                 pageNum: 1,
+                 count: 1,
+                 allowFix: 'jpg,jpeg,gif,png',
+                 applyMaterialAttArray: {},
+                 materialName: '身份证-正面'
+               },
+               {
+                 materialNameTitle: 'identificationCard2',
+                 fileSeqNo: 1,
+                 isFileCatalog: 1,
+                 pageNum: 1,
+                 count: 1,
+                 allowFix: 'jpg,jpeg,gif,png',
+                 applyMaterialAttArray: {},
+                 materialName: '身份证-反面'
+               }
+          ],
         stop: [
                {
                  auto: true,

@@ -40,7 +40,7 @@
 								</div>
 								 
 								<div class="buttons" style="margin-left: -60px">
-									<button type="button" class="buttonBig nexButton"   
+									<button type="button" class="buttonBig nexButton" >  
 										<span>下一步</span>
 									</button>
 								</div>

@@ -108,7 +108,7 @@
 					                <div class="tag" color="#2db7f5" style="width: 120px; height: 30px; line-height: 30px;font-size: 14px; text-align: center;">办事指引</div>
 					                <ul class="fileLi">
 					                    <li ><span>办理部门：</span><span class="orgName"></span></li>
-					                    <li <span>工作时间：</span><span class="workTime"></span></li>
+					                    <li ><span>工作时间：</span><span class="workTime"></span></li>
 					                    <li ><span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span><span class="orgAddr"></span></li>
 					                    <li ><span>联系电话：</span><span class="phoneNo"></span></li>
 					                </ul>

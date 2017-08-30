@@ -55,6 +55,7 @@ $(document).ready(function(){
 				
 				if(rlicPreAcceptInfo.tenancyBegin && rlicPreAcceptInfo.tenancyEnd){
 					$(".tenancyDate").val(rlicPreAcceptInfo.tenancyBegin+" ~ "+rlicPreAcceptInfo.tenancyEnd);
+					$(".tenancyDate").removeClass('disabled').removeAttr('disabled');
 				}
 				
 				$("input[name='newBizAddrAdc']").dist({initVal:rlicPreAcceptInfo.newBizAddrAdc});

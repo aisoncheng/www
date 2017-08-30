@@ -120,7 +120,7 @@
 									<div class="row">
 										<div class="col col-24 ">
 											<label class="ecoTypeLable">租赁/无偿使用期限</label> 
-											<input name='tenancyDate' style="width: 250px;" class='tenancyDate' />
+											<input name='tenancyDate' style="width: 250px;" class='tenancyDate tenancyDate' disabled="disabled"  />
 										</div>
 									</div>
 
@@ -353,11 +353,11 @@ $(function(){
 	
 	 var param = $.getQueryParam();
 	 if(param.i==2){
-		$.createScript("${webPath}/assets/js/changeView.js");
+		$.createScript("${webPath}/assets/js/extendView.js");
 	 }else if(param.i==1){
-		 $.createScript("${webPath}/assets/js/changeEdit.js");
+		$.createScript("${webPath}/assets/js/extendEidt.js");
 	 }else{
-		 $.createScript("${webPath}/assets/js/extendAdd.js");
+		$.createScript("${webPath}/assets/js/extendAdd.js");
 	 }
 	 
 	

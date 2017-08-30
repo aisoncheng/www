@@ -579,7 +579,7 @@ $(document).ready(function(){
 							url: base+'/saveReply',
 							data:{preAcceptUuid:msg.data.preAcceptUuid,reply:JSON.stringify(msg.data)},
 							ok:function(){
-								window.location.href = base+'/reply/change?id='+msg.data.preAcceptUuid;
+								window.location.href = base+"/reply/"+$.applyType()+"?id="+msg.data.preAcceptUuid;
 							}
 						});
 					}

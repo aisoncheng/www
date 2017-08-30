@@ -363,9 +363,6 @@
 
 
 								<div class="formButtons">
-									<button type="button" class="buttonBig ">
-										<span>保存草稿</span>
-									</button>
 									<button type="button" class="buttonBig submitBtn ">
 										<span>提交申请</span>
 									</button>

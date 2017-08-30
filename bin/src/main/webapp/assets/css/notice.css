@@ -1,0 +1,98 @@
+
+.datumLable {
+    border-bottom: 1px dashed #3f7bad;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    height: 30px
+}
+
+.datumLableTitle {
+    font-size: 20px;
+    border-bottom: 1px solid #3f7bad
+}
+
+.datumLableComment,.datumLableTitle {
+    height: 30px;
+    display: block;
+    float: left
+}
+
+.datumLableComment {
+    font-size: 14px;
+    line-height: 35px
+}
+
+.noticeSpan {
+    display: block;
+    padding: 10px 10px 5px;
+    font-size: 16px;
+}
+
+
+.phoneV input{
+	background-color: #fff;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    outline: none;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 10px;
+    width: 200px;
+    border-radius:2px;
+}
+.phoneV input:HOVER{
+	outline: none;
+}
+
+.phoneV .button{
+	float: right;
+	margin-right: 30px;
+	margin-right: 48px;
+    margin-top: 20px;
+}
+
+.phoneV  .buttonBig {
+	margin-right: 10px;
+}
+
+
+.phoneV li label{
+	display: inline-block;
+	width: 80px;
+	text-align: right;
+	padding-right: 20px;
+}
+
+.phoneV li{
+	margin-top:20px;
+	float: left;
+}
+
+.phoneV li *{
+	float: left;
+}
+
+.phoneV label{
+	height: 28px;
+	line-height: 28px;
+	border: 1px solid white;
+}
+
+
+.phoneNumber input{
+	width: 130px;
+	border-right: none;
+}
+.phoneNumber span{
+	border: 1px solid #d9d9d9;
+	height: 28px;
+	width:69px;
+	display: inline-block;
+	float: left;
+	line-height: 28px;
+	text-align:center;
+	border-top-right-radius:2px;
+	border-bottom-right-radius:2px;
+	cursor: pointer;
+	background: #eee;
+}

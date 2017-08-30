@@ -762,3 +762,14 @@ body .col label input {
 .calendar-wrap{
 	z-index: 88888;
 }
+
+
+/**
+ 加载中的图标
+*/
+.isLoading{
+	position: absolute;
+    top: 11px;
+    right: 30px;
+    right: 43px\9;
+}

@@ -213,7 +213,6 @@
 				}
 				return name;
 			}
-			
 	 });
 	
 	
@@ -234,22 +233,47 @@
 		}
 		var ul = $("<ul>"+"</ul>");
 		var li = '';
-		var china = window.city[86];
 		for(name in data ){
-			var pro = data[name];
+			
+			var pro = '';
+			var disabled = false;
+			
+			
+			if(typeof data[name] === "string"){
+				pro = data[name];
+			}else{
+				pro = data[name].label;
+				disabled = data[name].disabled;
+			}
+			
+			var classDisabled = disabled?'disabled':'';
+			
+			
 			if(hasNext(name)){
-				li+="<li title='"+pro+"' data-code='"+name+"'>"+
+				li+="<li title='"+pro+"' data-code='"+name+"' class='"+classDisabled+"'>"+
 				"<span class='itemName'>"+pro+"</span>"+
 				"<span class='itemArrow'>&gt;</span>"+
 				"</li>";
 			}else{
-				li+="<li title='"+pro+"' data-code='"+name+"'>"+
+				li+="<li title='"+pro+"' data-code='"+name+"' class='"+classDisabled+"'>"+
 				"<span class='itemName'>"+pro+"</span>"+
 				"</li>";
 			}
-			
 		}
+		
+		
+		//将禁用的移到下面 未禁用的在上面
 		ul.append(li);
+		
+		ul.find('li').each(function(i,v){
+			
+			if($(v).hasClass('disabled')){
+				$(v).insertAfter(ul.find('li:last'));
+			}
+			
+		});
+		
+	
 		return ul;
 	}
 	
@@ -365,6 +389,38 @@
 			});
 			
 		},
+		
+		/**
+		 *禁用某些不让选择的地址 
+		 *封装一下不需要每个地方都去调用 
+		 *传递一个回掉函数  函数接受一个参数..处理之后的city json对象
+		 *
+		 ***** 注意此方法包含业务逻辑.. 
+		 **/
+		partDist:function(param){
+			var those = this;
+			pubsub.subscribe('org',function(key,data){
+				var limitCity = $.extend(true,{},window.city);
+				var cityTemp = limitCity[86];
+				for(name in cityTemp){
+					if(name!=data.procode){
+						cityTemp[name] = {label:cityTemp[name],disabled:true};
+					}else{
+						var admdi = limitCity[name];
+						for(key in admdi){
+							if(key != data.admdivcode ){
+								admdi[key] = {label:admdi[key],disabled:true};
+							}
+						}
+					}
+				}
+				param = param || {};
+				param.city = limitCity;
+				$(those).dist(param);
+				//cb(limitCity);
+			});
+		},
+		
 		/**
 		 *地址的三联选择 
 		 *添加一个span 在上层挡住input 这样值就是code 而不是中文
@@ -382,8 +438,18 @@
 			var width = $(this).outerWidth();
 			dist.css({"top":(position.top+height+5)+'px',"left":position.left});
 			
+			
+			var city =  {};
+			
+			try {
+				city = param.city|| window.city;
+			} catch (e) {
+				city = window.city;
+			}
+			
+			
 			//生成第一个ul
-			var ul = getDistUl(window.city[86]);
+			var ul = getDistUl(city[86]);
 			dist.append(ul);
 			
 			
@@ -429,13 +495,18 @@
 			});
 			// 注册事件
 			dist.on('click','li',function(){
+				
+				if($(this).hasClass('disabled')){
+					return false;
+				}
+				
 				var ul = $(this).parents('ul');
 				ul.find('li').removeClass('active');
 				$(this).addClass('active');
 				ul.nextAll().remove();
 				
 				var cityCode = $(this).attr('data-code');
-				var newUl = getDistUl(window.city[cityCode]);
+				var newUl = getDistUl(city[cityCode]);
 				if(newUl){
 					ul.after(newUl);
 				}else{
@@ -514,17 +585,28 @@ $.setParamsCookie();
 	w.pubsub = pubsub;
 	
 	
-	
+	//查询人员信息
 	$.ajaxPost({
 		url:cfg.basePath+"/licPreGns/getUserInfoZJ",
 		ok:function(msg){
 		  if(msg.code==200){
-			  console.log(msg);
+			  console.log(msg,'人员信息');
 			  w.user = msg.data;
 			  pubsub.publish("user", msg.data);
 		  }
 		}
 	});
+	//查询行政区划信息
+	$.ajaxPost({
+		url:cfg.basePath+"/licPreGns/getBizRegion",
+		ok:function(msg){
+		  if(msg.code==200){
+			  console.log(msg,'行政区划');
+			  pubsub.publish("org", msg.data);
+		  }
+		}
+	});
+	
 	
 	
 })(window)

@@ -68,7 +68,7 @@
 									<div class="row">
 										<div class="col col-24">
 											<label>经营范围</label> <input value="卷烟零售,雪茄烟零售"
-												disabled="disabled" class="disabled" name="bizRange" />
+												disabled="disabled bizRange" class="disabled"  />
 										</div>
 									</div>
 									<div class="row">
@@ -160,7 +160,7 @@
 										</div>
 										<div class="col col-12">
 											<label>证件类型</label>
-											<input  name="picCidType"  />
+											<input  name="picCidType"  disabled="disabled" class="disabled" />
 											<!-- <select name="picCidType">
 												<option value="2801">身份证</option>
 												<option value="2802">户口本</option>
@@ -334,9 +334,9 @@ $(function(){
 	
 	 var param = $.getQueryParam();
 	 if(param.i==2){
-		$.createScript("${webPath}/assets/js/changeView.js");
+		$.createScript("${webPath}/assets/js/newView.js");
 	 }else if(param.i==1){
-		 $.createScript("${webPath}/assets/js/changeEdit.js");
+		 $.createScript("${webPath}/assets/js/newEdit.js");
 	 }else{
 		 $.createScript("${webPath}/assets/js/newAdd.js");
 	 }

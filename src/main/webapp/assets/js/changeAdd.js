@@ -139,6 +139,7 @@ $(document).ready(function(){
 	});
 	
 	
+	//企业(字号)名称变更 显示的文件变化
 	$(".entNameIsChangeTitle").click(function(){
 		
 		  var checkbox = $(this).find("input[type='checkbox']");
@@ -170,10 +171,8 @@ $(document).ready(function(){
 			  }
 			  
 		  }else{
-			  //如果是点击企业名称来的 则删除
-			 if( busin.attr('data-way')=='entName'){
-				 busin.remove();
-			 }
+			  //删除由企业名字变更加入的文件
+			  $('div[data-way]').remove();
 		  }
 
 	});
@@ -200,14 +199,16 @@ $(document).ready(function(){
 			radio.prop('checked', 'false');
 			$(this).data('checked', 0);
 		}
+		$("div[data-way='addr'],.relocation,.newLic,.businessLicense").remove();
 		var radioVal = radio.val();
+		
+		console.log(121);
 		if(radioVal==2){
 			//businessLicense  changed 工商营业执照（变更后）
 			//企业变更  工商营业执照新
 			// relocation  拆迁安置协议等证明材料
 			
 			// newLic  工商营业执照（新地址）
-			$(".businessLicense").remove();
 			$('.uploadContainer').append("<div class='row uploadRow relocation' data-way='addr'>"+
 										"<div class='col labelCol' style='margin-left: 0%; width: 16.666666666666664%;'>"+
 											"<span class='fileLable'>拆迁安置协议等证明材料</span>"+

@@ -396,10 +396,8 @@ $(document).ready(function(){
 			  }
 			  
 		  }else{
-			  //如果是点击企业名称来的 则删除
-			 if( busin.attr('data-way')=='entName'){
-				 busin.remove();
-			 }
+			  //删除由企业名字变更加入的文件
+			  $('div[data-way]').remove();
 		  }
 
 	});
@@ -588,54 +586,8 @@ $(document).ready(function(){
 			return false;
 		}
 		
-		//验证文件
-		var fileData = [];
-		//fileData.shift();
-		var fileFlag = true;
-		$('.uploadRow').not(":first").each(function(i,v){
-			 var materialNameTitle = $(this).find('.contentColInner').attr('materialNameTitle');
-			 var imgs = $(this).find('img');
-			 var input = $(this).find("input[type='file']");
-			 var label = $(this).find('.fileLable').text();
-			 var count =  input.attr('count') || 999;
-			 
-			 var file = {
-					 materialNameTitle: materialNameTitle,
-	                 fileSeqNo: i,
-	                 isFileCatalog: 1,
-	                 pageNum: 1,
-	                 count: count,
-	                 allowFix: 'jpg,jpeg,gif,png',
-	                 applyMaterialAttArray: [],
-	                 materialName: label
-					 
-			 };
-	
-				 
-			 
-			 var imgDatas = [];
-			 imgs.each(function(i,v){
-				 var imgData = $(this).data('img');
-				
-				 if(imgData){
-					 var postImg = {};
-					 postImg.seqNo = i;
-					 postImg.picName = imgData.picName;
-					 postImg.applyMaterialAttPath = imgData.applyMaterialAttPath;
-					 imgDatas.push(postImg);
-				 } 
-			 });
-			
-			 if(imgDatas.length==0){
-				 layer.alert("请上传【"+label+"】",{title:"友情提醒"});
-				 fileFlag = false;
-				 return false;
-			 }
-			 
-			 file.applyMaterialAttArray =  imgDatas;
-			 fileData.push(file);
-		});
-		if(!fileFlag){
+		var fileData =  biz.getFile();
+		if(!fileData){
 			return fileFlag;
 		}
 		

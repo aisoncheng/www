@@ -15,6 +15,7 @@
 <script type="text/javascript" src="${webPath}/assets/layui/layer.js"></script>
 <script type="text/javascript" src="${webPath}/assets/js/cfg.js"></script>
 <script type="text/javascript" src="${webPath}/assets/js/tools.js"></script>
+<script type="text/javascript" src="${webPath}/assets/js/biz.js"></script>
 
 
 

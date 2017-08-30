@@ -9,7 +9,16 @@
 			}
 		});
 		
-		$(".bizAddrAdc").dist();
+		
+		
+		
+		
+
+		$(".bizAddrAdc").partDist();
+		
+		
+		
+		
 		$("input[name='postAddrAdc']").dist();
 		
 		$("input[name='picCidType']").select({data:$.picType,key:'label',valKey:'value',initVal:{ label:'身份证',value:2801 }});
@@ -23,11 +32,7 @@
 		});
 		
 		
-		$('#distpicker').distpicker({
-			province : '浙江省',
-			city : '杭州市',
-			district : '西湖区'
-		});
+
 
 		$(".radioBody").click(function() {
 			var val = $(this).data('checked');
@@ -146,150 +151,44 @@
 		});
 
 		
-		var flag = false;
-		new File(
-				{
-					el : '.contentColInner input',
-					eve : 'change',
-					alow : [ 'jpg', 'png', 'gif', 'jpeg' ],
-					url : cfg.basePath+"/licPreGns/fileUpload?accesstoken="+$.getCookieAcce()+"&orgCode="+$.getCookieOrg(),
-					callBack : function(id, a) {
-						var taget = $("#"+id);
-						var parent = taget.parents(".contentColInner");
-						var showImg = parent.find('.showImg');
-						var url  = cfg.basePath+"/licPreGns/filePreview?filePath="+a.data.path+"&ccesstoken="+$.getCookieAcce()+"&orgCode="+$.getCookieOrg();
-						
-						var lastimg = showImg.find('.imgParent:last');
-						lastimg.find('img').attr({'src':url});
-						lastimg.find('img').data('img',a.data);
-						lastimg.find('.icon').show();
-						
-						if(!flag){
-							layer.photos({
-							    photos: '.showImg'
-							   ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-							}); 
-							flag = true;
-						}
-						taget.val('');
-						
-						
-					},
-					before:function(a,b,c){
-						
-						var taget = $(this);
-						var targetCount = taget.attr('count');
-						targetCount = targetCount ? parseInt(targetCount) : 9999;
-						
-						var parent = taget.parents(".contentColInner");
-						var showImg = parent.find('.showImg');
-						//判断是否能够上传文件 超过了数量
-						if(showImg.find('img').length>=targetCount){
-							return false;
-						}
-						showImg.append("<div class='imgParent'>"+
-								"<img src='${webPath}/assets/img/loading.gif'>"+
-								 "<i class='icon close' style='background-position: -17px 0px;display:none;'></i>"+
-								"</div>");
-						
-						
-						if(showImg.find('img').length>=targetCount){
-							parent.find("input[type='file']").hide();
-							parent.find('.buttonContainer .button').addClass('disabled');
-						}
-						
-						return true;
-					}
-				});
-
-		//删除文件 icon close
-		$(".showImg").on('click',".icon.close",function(){
-			var parent =  $(this).parents(".contentColInner");
-			var imgParent = $(this).parents('.imgParent');
-			imgParent.remove();
-			parent.find("input[type='file']").show();
-			parent.find('.buttonContainer .button').removeClass('disabled');
-		});
+	
+		//文件上传
+		biz.upload();
 		
 
-		
-		
-		
+		//提交表单
 		$('.submitBtn').click(function() {
-			//验证表单 
-			var formFlag = $(".layui-form").valid();
-			if(!formFlag){
+
+			var  sendData = biz.formValidate();
+			if(!sendData){
 				return false;
 			}
 			
-			//验证文件
-			var fileData = $.extend([],cfg.files.newBus);
-			fileData.shift();
-			$('.contentColInner').each(function(i,v){
-				 var materialNameTitle = $(this).attr('materialNameTitle');
-				 var imgs = $(this).find('img');
-				 var imgType = fileData[i];
-				 var count =  imgType.count;
-				 var imgDatas = [];
-				 imgs.each(function(i,v){
-					 var imgData = $(this).data('img');
-					 if(imgData){
-						 var postImg = {};
-						 postImg.seqNo = i;
-						 postImg.picName = imgData.name;
-						 postImg.applyMaterialAttPath = imgData.path;
-						 imgDatas.push(postImg);
-					 } 
-				 });
-				 if(imgDatas.length==0){
-					 layer.alert("请上传【"+imgType.materialName+"】",{title:"友情提醒"});
-					 return false;
-				 }
-				 
-				 fileData[i].applyMaterialAttArray = imgDatas; 
-			});
-			
-			//验证声明$(".agreed:checked")
-			
-			if($(".agreed:checked").length==0){
-				layer.alert("请点击同意按钮",{title:"友情提醒"});
-				return false;
-			}
-			
-			var  data = $(".layui-form").serialize();
-			
-			var formData = {};
-			var datas = data.split('&');
-			$(datas).each(function(i,v){
-				var vs = v.split('=');
-				formData[vs[0]] = vs[1];
-			});
-			
-			var tenancyDates = (formData.tenancyDate+"").split('++~++');
-			formData.tenancyBegin = tenancyDates[0];
-			formData.tenancyEnd = tenancyDates[1];
+			var formData = sendData.rlicPreAcceptInfo;
+			var tenancyDates = (formData.tenancyDate+"").split('~');
+			formData.tenancyBegin = $.trim(tenancyDates[0]);
+			formData.tenancyEnd = $.trim(tenancyDates[1]);
 			delete formData.tenancyDate;
 			formData.postLinkName = user.username;
 			formData.postLinkTel = user.mobile;
 			formData.applyType = '1001';
 			formData.bizRange = '1501,1502';
-			formData.bizAddrAdc = $("input[name='bizAddrAdc']").attr('data-code');
-			
-			
-			//获取行政区划
-			
-			var  postData = {rlicPreAcceptInfo: formData, applyMaterialArray: fileData};
+			formData.placeOwnership = $("input[name='placeOwnership']:checked").val();
+			formData.ecoType = $("input[name='ecoType']:checked").val();
+			//formData.bizAddrAdc = $("input[name='bizAddrAdc']").attr('data-code');
+
+			sendData.rlicPreAcceptInfo = formData;
 			$.ajaxPost({
 				url:cfg.basePath+"/licPreGns/submitApplyZJ",
-				data:{jsonStr:JSON.stringify(postData)},
+				data:{jsonStr:JSON.stringify(sendData)},
 				ok:function(msg){
 					//msg.data
 					//缓存信息在sessio中
 					$.ajaxPost({
-						url: '${webPath}/saveReply',
+						url: base+'/saveReply',
 						data:{preAcceptUuid:msg.data.preAcceptUuid,reply:JSON.stringify(msg.data)},
 						ok:function(){
-							window.location.href = '${webPath}/reply/new?id='+msg.data.preAcceptUuid;
+							window.location.href = base+'/reply/new?id='+msg.data.preAcceptUuid;
 						}
 					});
 				}

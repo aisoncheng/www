@@ -19,14 +19,6 @@
 
 
 <style type="text/css">
-.formButtons {
-	width: 200px;
-	margin: 0 auto;
-}
-
-.formButtons button {
-	margin-right: 10px;
-}
 
 
 </style>
@@ -308,7 +300,6 @@
 
 
 								<div class="formButtons">
-									
 									<button type="button" class="buttonBig submitBtn ">
 										<span>提交申请</span>
 									</button>

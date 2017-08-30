@@ -773,3 +773,16 @@ body .col label input {
     right: 30px;
     right: 43px\9;
 }
+
+
+.formButtons {
+	width: 200px;
+	margin: 0 auto;
+}
+
+.formButtons button {
+	margin-right: 10px;
+}
+.calendar-inputWrap{
+	margin-left: 5px;
+}

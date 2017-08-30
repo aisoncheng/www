@@ -76,15 +76,15 @@
 				if(!fileData){
 					return fileFlag;
 				}
-				
-				
-				
 				//验证声明$(".agreed:checked")
 				if($(".agreed:checked").length==0){
 					layer.alert("请点击同意按钮",{title:"友情提醒"});
 					return false;
 				}
 				var  formData = $(".layui-form").getFormData();
+				
+				formData.applyType = $.getApplyTypCode();
+				formData.bizRange = '1501,1502';
 				
 				return  {rlicPreAcceptInfo: formData, applyMaterialArray: fileData};
 			},

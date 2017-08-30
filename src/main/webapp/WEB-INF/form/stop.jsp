@@ -93,13 +93,10 @@
 									<div class="row uploadRow">
 										<div class="col labelCol"
 											style="margin-left: 0%; width: 16.666666666666664%;">
-											<span class="fileLable"
-												style="height: 40px; line-height: 40px;">申请表</span>
+											<span class="fileLable" style="height: 40px; line-height: 40px;">申请表</span>
 										</div>
-										<div class="col contentCol"
-											style="margin-left: 0%; width: 83.33333333333334%;">
-											<div
-												style="height: 40px; line-height: 40px; border-left: 1px dotted rgb(202, 195, 195);">
+										<div class="col contentCol" style="margin-left: 0%; width: 83.33333333333334%;">
+											<div style="height: 40px; line-height: 40px; border-left: 1px dotted rgb(202, 195, 195);">
 												<a style="margin-left: 15px;" class="autoCreate">自动生成</a>
 											</div>
 										</div>
@@ -187,7 +184,8 @@
 </body>
 
 
-<script type="text/javascript">
+<script type="text/javascript">+
+
 	$(document).ready(function(){
 		//layer.myerror();
 		//订阅user对应的 对象	
@@ -403,8 +401,8 @@
 			formData.applyCloseBusinessDateS = applyCloseBusinessDate[0];
 			formData.applyCloseBusinessDateE = applyCloseBusinessDate[1];
 			
-			delete formData.tenancyDate;
-			formData.applyType = '1004';
+			delete formData.applyCloseBusinessDate;
+			formData.applyType = 1004;
 			formData.bizRange = '1501,1502';
 			formData.bizAddrAdc = $("input[name='bizAddrAdc']").attr('data-code');
 			
@@ -418,7 +416,11 @@
 			formData.picCidAddrStreet = lic.retailCidAddress;
 			formData.picAddrStreet = lic.retailAddress;
 			formData.lineTel = lic.retailTel;
-			formData.bizRangeIsChange = 0; //没有变更项..
+			formData.biId = lic.induCommBusinessLicenceNumber;
+			formData.biPeriod = lic.busiMgrLicValidity;
+			formData.placeOwnership = lic.groundOwnership;
+			formData.postLinkName = formData.linkName;
+			formData.postLinkTel = formData.lineTel;
 			
 			//获取行政区划
 			

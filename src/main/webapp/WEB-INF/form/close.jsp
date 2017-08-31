@@ -73,8 +73,15 @@
 									
 									<div class="row">
 										<div class="col col-24">
-											<label>申请歇业事由</label>
-											<input name="getOutBusinessReason" />
+											<label>申请停业事由</label>
+											<input name="closeBusinessReason" />
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="col col-24 ">
+											<label class="ecoTypeLable">申请停业日期</label> 
+											<input name='applyCloseBusinessDate' style="width: 250px;" class='applyCloseBusinessDate' />
 										</div>
 									</div>
 								</div>
@@ -182,11 +189,11 @@ $(function(){
 	
 	 var param = $.getQueryParam();
 	 if(param.i==2){
-		$.createScript("${webPath}/assets/js/stopView.js");
+		$.createScript("${webPath}/assets/js/closeView.js");
 	 }else if(param.i==1){
-		 $.createScript("${webPath}/assets/js/stopEdit.js");
+		 $.createScript("${webPath}/assets/js/closeEdit.js");
 	 }else{
-		 $.createScript("${webPath}/assets/js/stopAdd.js");
+		 $.createScript("${webPath}/assets/js/closeAdd.js");
 	 }
 });
 	

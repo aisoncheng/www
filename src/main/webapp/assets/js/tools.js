@@ -330,6 +330,7 @@
 				text.addClass('disabled');
 			}
 			
+			
 			if(param.initVal){
 				target.val(param.initVal[param.valKey]);//.attr('data-value',param.initVal[param.valKey]);
 				text.html(param.initVal[param.key]);

@@ -190,9 +190,9 @@
 $(function() {
 	 var param = $.getQueryParam();
 	 if(param.i==2){
-		$.createScript("${webPath}/assets/js/stopView.js");
+		$.createScript("${webPath}/assets/js/closeView.js");
 	 }else if(param.i==1){
-		$.createScript("${webPath}/assets/js/stopEdit.js");
+		$.createScript("${webPath}/assets/js/closeEdit.js");
 	 }else{
 		$.createScript("${webPath}/assets/js/resumeAdd.js");
 	 }

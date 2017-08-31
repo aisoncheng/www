@@ -77,16 +77,13 @@
 									
 									<div class="row">
 										<div class="col col-12 ">
-											<label class="ecoTypeLable">原停业日期</label> 
-											<input name='originalCloseBusinessDateS' style="width: 100px;" class='disabled' disabled="disabled"  autoFill='true' /> 至 
-											<input name='originalCloseBusinessDateE' style="width: 100px;" class='disabled' disabled="disabled"  autoFill='true' />
-										</div>
-									</div>
-									
-									<div class="row">
-										<div class="col col-12 ">
 											<label class="ecoTypeLable">申请恢复营业日期</label> 
 											<input name='applyRestoreManagerDate' class="applyDate" /> 
+										</div>
+										<div class="col col-12 ">
+											<label class="ecoTypeLable">原停业日期</label> 
+											<input name='originalCloseBusinessDateS' style="width: 108px;" class='disabled' disabled="disabled"  autoFill='true' /> 至 
+											<input name='originalCloseBusinessDateE' style="width: 108px;" class='disabled' disabled="disabled"  autoFill='true' />
 										</div>
 									</div>
 								</div>

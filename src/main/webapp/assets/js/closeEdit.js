@@ -60,8 +60,11 @@ $(document).ready(function(){
 							}
 							for(var i=0;i<lics.length;i++){
 								lics[i].disabled = lics[i].isCanApply=='0' ? true:false;
+								if(rlicPreAcceptInfo.retailLicNo==lics[i].licNo){
+									lic = lics[i];
+								}
 							}
-							$(".retailLicNo").select({data:lics,key:'licNo',initVal:{licNo:rlicPreAcceptInfo.licNo,licNo:rlicPreAcceptInfo.licNo},valKey:'licNo',cb:function(data){
+							$(".retailLicNo").select({data:lics,key:'licNo',initVal:{'licNo':rlicPreAcceptInfo.retailLicNo},valKey:'licNo',cb:function(data){
 								if(data.disabled){
 									layer.myerror("证号为【"+data.licNo+"】的许可证不可办理此业务,原因：【"+data.notApplyReason+"】");
 								}else{
@@ -155,6 +158,34 @@ $(document).ready(function(){
 			
 			delete formData.applyCloseBusinessDate;
 			formData.bizAddrAdc = $("input[name='bizAddrAdc']").attr('data-code');
+			
+			
+			/**
+			 * 
+			 *  "applyType":1007,
+		        "retailLicNo":"330101229397",
+		        "entName":"杭州测试01",
+		        "bizAddrAdc":"330000,330200,330201",
+		        "bizAddrStreet":"杭州测试01",
+		        "bizRange":"1501,1502",
+		        "ecoType":1401,
+		        "ecoTypeOther":"",
+		        "biId":"杭州测试01",
+		        "placeOwnership":2501,
+		        "picName":"艾成松",
+		        "picCidType":2801,
+		        "picCidNo":"36252319861019161X",
+		        "picCidAddrStreet":"杭州测试01",
+		        "picAddrStreet":"杭州测试01",
+		        "linkName":"艾成松",
+		        "lineTel":"18268107023",
+		        "rlicLoseReason":"",
+		        "rlicDamageReason":"",
+		        "getOutBusinessReason":"申请歇业事",
+		        "postLinkName":"艾成松",
+		        "postLinkTel":"18268107023",
+			 * 
+			 **/
 			
 			formData.entName = lic.companyName; // 填充额外的信息
 			formData.bizAddrAdc = lic.rlicAdcFull;

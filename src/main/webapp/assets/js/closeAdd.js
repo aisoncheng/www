@@ -146,7 +146,7 @@ $(document).ready(function(){
 					//msg.data
 					//缓存信息在sessio中
 					$.ajaxPost({
-						url: '${webPath}/saveReply',
+						url: base+'/saveReply',
 						data:{preAcceptUuid:msg.data.preAcceptUuid,reply:JSON.stringify(msg.data)},
 						ok:function(){
 							window.location.href = base+"/reply/"+$.applyType()+"?id="+msg.data.preAcceptUuid;

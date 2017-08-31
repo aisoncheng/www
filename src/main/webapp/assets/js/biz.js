@@ -236,7 +236,52 @@
 				    photos: '.showImg'
 				   ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
 				}); 
-			}
+			},
+			/**
+			 *验证触发 
+			 **/
+			yzOption:function(param){
+				
+				var options = {
+						onkeyup : function(a, b) {
+							$.validator.defaults.onkeyup.call(this, a, b);
+							var name = a.name;
+							//不合法
+							var parent = $(a).parent();
+							var icon = parent.find('i.icon');
+							if (icon.length == 0) {
+								$(a).after("<i class='icon'></i>");
+							}
+							if (this.invalid[name]) {
+								icon.removeClass('success').addClass('error');
+							} else {
+								icon.removeClass('error').addClass('success');
+							}
+						},
+						success : function(a, b) {
+							var parent = $(a).parent();
+							var icon = parent.find('i.icon');
+							if (icon.length == 0) {
+								$(a).after("<i class='icon success'></i>");
+							} else {
+								icon.removeClass('error').addClass('success');
+							}
+						},
+						errorPlacement : function(error, element) {
+							error.appendTo(element.parent());
+							var parent = element.parent();
+							var icon = parent.find('i.icon');
+							if (icon.length == 0) {
+								parent.append("<i class='icon error'></i>");
+							} else {
+								icon.removeClass('success').addClass('error');
+							}
+						}
+				}
+				param = param || {};
+			
+				return $.extend(param,options);
+		}
 	}
 	
 	w.biz = biz;

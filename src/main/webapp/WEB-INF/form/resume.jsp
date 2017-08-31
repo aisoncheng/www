@@ -71,22 +71,22 @@
 									<div class="row">
 										<div class="col col-24">
 											<label>申请恢复营业事由</label>
-											<input name="reopenBusinessReason" />
+											<input name="reopenBusinessReason">
 										</div>
 									</div>
 									
 									<div class="row">
 										<div class="col col-12 ">
 											<label class="ecoTypeLable">原停业日期</label> 
-											<input name='applyCloseBusinessDateS' style="width: 100px;" class='disabled' disabled="disabled"  autoFill='true' /> 至 
-											<input name='applyCloseBusinessDateE' style="width: 100px;" class='disabled' disabled="disabled"  autoFill='true' />
+											<input name='originalCloseBusinessDateS' style="width: 100px;" class='disabled' disabled="disabled"  autoFill='true' /> 至 
+											<input name='originalCloseBusinessDateE' style="width: 100px;" class='disabled' disabled="disabled"  autoFill='true' />
 										</div>
 									</div>
 									
 									<div class="row">
 										<div class="col col-12 ">
 											<label class="ecoTypeLable">申请恢复营业日期</label> 
-											<input name='applyRestoreManagerDate' class="applyRestoreManagerDate" style="width: 100px;" /> 
+											<input name='applyRestoreManagerDate' class="applyRestoreManagerDate" /> 
 										</div>
 									</div>
 								</div>
@@ -102,7 +102,7 @@
 										<div class="col labelCol"
 											style="margin-left: 0%; width: 16.666666666666664%;">
 											<span class="fileLable"
-												style="height: 40px; line-height: 40px;">申请表</span>
+												style="height: 40px; line-height: 40px;padding:0px;">申请表</span>
 										</div>
 										<div class="col contentCol"
 											style="margin-left: 0%; width: 83.33333333333334%;">
@@ -169,10 +169,7 @@
 								</div>
 
 
-								<div class="formButtons">
-									<button type="button" class="buttonBig ">
-										<span>保存草稿</span>
-									</button>
+								<div class="formButtons" style="text-align: center;">
 									<button type="button" class="buttonBig submitBtn ">
 										<span>提交申请</span>
 									</button>
@@ -233,6 +230,9 @@
 						layer.myerror("证号为【"+data.licNo+"】的许可证不可办理此业务,原因：【"+data.notApplyReason+"】");
 					}else{
 						lic = data;
+						console.log("许可证信息", data);
+						$("input[name='originalCloseBusinessDateS']").val(data.applyCloseBusinessDateStart);
+						$("input[name='originalCloseBusinessDateE']").val(data.applyCloseBusinessDateEnd);
 						$(".linkName").val(data.managerName);
 					}	
 				}});
@@ -365,7 +365,7 @@
 			}
 			
 			//验证文件
-			var fileData = $.extend([],cfg.files.newBus);
+			var fileData = $.extend([],cfg.files.resume);
 			fileData.shift();
 			$('.contentColInner').each(function(i,v){
 				 var materialNameTitle = $(this).attr('materialNameTitle');
@@ -407,14 +407,9 @@
 				formData[vs[0]] = vs[1];
 			}); */
 			
-			var applyCloseBusinessDate = (formData.applyCloseBusinessDate+"").split('~');
-			formData.applyCloseBusinessDateS = applyCloseBusinessDate[0];
-			formData.applyCloseBusinessDateE = applyCloseBusinessDate[1];
-			
-			delete formData.tenancyDate;
-			formData.applyType = '1004';
+			formData.applyType = $.getApplyTypCode();
 			formData.bizRange = '1501,1502';
-			formData.bizAddrAdc = $("input[name='bizAddrAdc']").attr('data-code');
+			// formData.bizAddrAdc = $("input[name='bizAddrAdc']").attr('data-code');
 			
 			formData.entName = lic.companyName; // 填充额外的信息
 			formData.bizAddrAdc = lic.rlicAdcFull;
@@ -431,6 +426,7 @@
 			//获取行政区划
 			
 			var  postData = {rlicPreAcceptInfo: formData, applyMaterialArray: fileData};
+			console.log(JSON.stringify(postData));
 			$.ajaxPost({
 				url:cfg.basePath+"/licPreGns/submitApplyZJ",
 				data:{jsonStr:JSON.stringify(postData)},

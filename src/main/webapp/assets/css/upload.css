@@ -107,6 +107,7 @@
 
 .contentColInner input{
 	opacity:0;
+	filter:alpha(opacity=0); 
 }
 body .uploadRow .labelCol.firstUploadItem .fileLable{
 	padding-top: 0px;

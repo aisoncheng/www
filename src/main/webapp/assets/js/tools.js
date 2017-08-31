@@ -41,11 +41,11 @@
                     ];
 	
 	$.extend({
-			createScript: function(src){
+			createScript: function(src,target){
 				var script=document.createElement("script");  
 				script.setAttribute("type", "text/javascript");  
 				script.setAttribute("src", src);  
-				var html = document.getElementsByTagName("html");  
+				var html = document.getElementsByTagName(target||"html");  
 				html[0].appendChild(script);  
 			},
 			picType:picType,
@@ -380,6 +380,7 @@
 					target.val(data[param.valKey]);
 					text.html(data[param.key]);
 					mySelect.hide();
+					$('.layui-form').valid(target);
 				}
 			});
 			
@@ -523,6 +524,7 @@
 					});
 					text.html(infos.name.join('/'));
 					target.val(infos.code.join(','));
+					$('.layui-form').valid(target);
 				}
 			});
 			

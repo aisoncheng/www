@@ -48,58 +48,27 @@ $(document).ready(function(){
 			}
 		});
 		//表单验证
-		$(".layui-form").validate({
-			rules : {
-				picName : 'required',
-				linkName : "required",
-				lineTel : 'required',
-				retailLicNo:"required",
-				closeBusinessReason:"required",
-				applyCloseBusinessDate:"required"
-			},
-			messages : {
-				picName : '申请人获取失败',
-				linkName : "请输入联系人",
-				lineTel : '联系电话获取失败',
-				retailLicNo:"请选择许可证",
-				closeBusinessReason:"请填写停业事由",
-				applyCloseBusinessDate:"请选择停业时间"
-			},
-			onkeyup : function(a, b) {
-				$.validator.defaults.onkeyup.call(this, a, b);
-				var name = a.name;
-				//不合法
-				var parent = $(a).parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					$(a).after("<i class='icon'></i>");
-				}
-				if (this.invalid[name]) {
-					icon.removeClass('success').addClass('error');
-				} else {
-					icon.removeClass('error').addClass('success');
-				}
-			},
-			success : function(a, b) {
-				var parent = $(a).parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					$(a).after("<i class='icon success'></i>");
-				} else {
-					icon.removeClass('error').addClass('success');
-				}
-			},
-			errorPlacement : function(error, element) {
-				error.appendTo(element.parent());
-				var parent = element.parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					parent.append("<i class='icon error'></i>");
-				} else {
-					icon.removeClass('success').addClass('error');
+		$(".layui-form").validate(biz.yzOption(
+			{
+				rules : {
+					picName : 'required',
+					linkName : "required",
+					lineTel : 'required',
+					retailLicNo:"required",
+					closeBusinessReason:"required",
+					applyCloseBusinessDate:"required"
+				},
+				messages : {
+					picName : '申请人获取失败',
+					linkName : "请输入联系人",
+					lineTel : '联系电话获取失败',
+					retailLicNo:"请选择许可证",
+					closeBusinessReason:"请填写停业事由",
+					applyCloseBusinessDate:"请选择停业时间"
 				}
 			}
-		});
+
+		));
 		
 		
 		//文件上传
@@ -116,9 +85,7 @@ $(document).ready(function(){
 			var applyCloseBusinessDate = (formData.applyCloseBusinessDate+"").split('~');
 			formData.applyCloseBusinessDateS = $.trim(applyCloseBusinessDate[0]);
 			formData.applyCloseBusinessDateE = $.trim(applyCloseBusinessDate[1]);
-			
 			delete formData.applyCloseBusinessDate;
-			formData.bizAddrAdc = $("input[name='bizAddrAdc']").attr('data-code');
 			
 			formData.entName = lic.companyName; // 填充额外的信息
 			formData.bizAddrAdc = lic.rlicAdcFull;
@@ -135,7 +102,6 @@ $(document).ready(function(){
 			formData.placeOwnership = lic.groundOwnership;
 			formData.postLinkName = formData.linkName;
 			formData.postLinkTel = formData.lineTel;
-			
 			//获取行政区划
 			
 			sendData.rlicPreAcceptInfo = formData;

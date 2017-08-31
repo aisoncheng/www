@@ -83,62 +83,27 @@ $(document).ready(function(){
 			lang : 'zh',
 			mode : 'range'
 		});
+	
 		
-
 		//表单验证
-		$(".layui-form").validate({
+		$(".layui-form").validate(biz.yzOption({
 			rules : {
 				picName : 'required',
 				linkName : "required",
 				lineTel : 'required',
 				retailLicNo:"required",
-				closeBusinessReason:"required",
-				applyCloseBusinessDate:"required"
+				reopenBusinessReason:"required",
+				applyRestoreManagerDate:"required"
 			},
 			messages : {
 				picName : '申请人获取失败',
 				linkName : "请输入联系人",
 				lineTel : '联系电话获取失败',
 				retailLicNo:"请选择许可证",
-				closeBusinessReason:"请填写停业事由",
-				applyCloseBusinessDate:"请选择停业时间"
-			},
-			onkeyup : function(a, b) {
-				$.validator.defaults.onkeyup.call(this, a, b);
-				var name = a.name;
-				//不合法
-				var parent = $(a).parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					$(a).after("<i class='icon'></i>");
-				}
-				if (this.invalid[name]) {
-					icon.removeClass('success').addClass('error');
-				} else {
-					icon.removeClass('error').addClass('success');
-				}
-			},
-			success : function(a, b) {
-				var parent = $(a).parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					$(a).after("<i class='icon success'></i>");
-				} else {
-					icon.removeClass('error').addClass('success');
-				}
-			},
-			errorPlacement : function(error, element) {
-				error.appendTo(element.parent());
-				var parent = element.parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					parent.append("<i class='icon error'></i>");
-				} else {
-					icon.removeClass('success').addClass('error');
-				}
+				reopenBusinessReason:"请填写恢复营业事由",
+				applyRestoreManagerDate:"请选择恢复营业日期"
 			}
-		});
-		
+		}));
 		
 		//文件上传
 		biz.upload();
@@ -151,12 +116,6 @@ $(document).ready(function(){
 			}
 			
 			var formData = sendData.rlicPreAcceptInfo;
-			var applyCloseBusinessDate = (formData.applyCloseBusinessDate+"").split('~');
-			formData.applyCloseBusinessDateS = $.trim(applyCloseBusinessDate[0]);
-			formData.applyCloseBusinessDateE = $.trim(applyCloseBusinessDate[1]);
-			delete formData.applyCloseBusinessDate;
-
-
 			formData.entName = lic.companyName; // 填充额外的信息
 			formData.bizAddrAdc = lic.rlicAdcFull;
 			formData.bizAddrStreet = lic.retailAddress;
@@ -167,14 +126,11 @@ $(document).ready(function(){
 			formData.picCidAddrStreet = lic.retailCidAddress;
 			formData.picAddrStreet = lic.retailAddress;
 			formData.lineTel = lic.retailTel;
-			formData.biId = lic.induCommBusinessLicenceNumber;
-			formData.biPeriod = lic.busiMgrLicValidity;
-			formData.placeOwnership = lic.groundOwnership;
-			formData.postLinkName = formData.linkName;
-			formData.postLinkTel = formData.lineTel;
-			
-			//获取行政区划
-			
+			formData.bizRangeIsChange = 0; //没有变更项
+			formData.postAddrAdc = lic.retailTel;
+			formData.postLinkName = user.username;
+			formData.postLinkTel = user.mobile;
+
 			sendData.rlicPreAcceptInfo = formData;
 			$.ajaxPost({
 				url:cfg.basePath+"/licPreGns/submitApplyZJ",

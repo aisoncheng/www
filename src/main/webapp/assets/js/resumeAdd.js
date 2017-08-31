@@ -44,14 +44,14 @@ $(document).ready(function(){
 		}
 	});
 	//表单验证
-	$(".layui-form").validate({
+	$(".layui-form").validate(biz.yzOption({
 		rules : {
 			picName : 'required',
 			linkName : "required",
 			lineTel : 'required',
 			retailLicNo:"required",
 			reopenBusinessReason:"required",
-			applyCloseBusinessDate:"required"
+			applyRestoreManagerDate:"required"
 		},
 		messages : {
 			picName : '申请人获取失败',
@@ -59,162 +59,21 @@ $(document).ready(function(){
 			lineTel : '联系电话获取失败',
 			retailLicNo:"请选择许可证",
 			reopenBusinessReason:"请填写恢复营业事由",
-			applyCloseBusinessDate:"请选择恢复营业日期"
-		},
-		onkeyup : function(a, b) {
-			$.validator.defaults.onkeyup.call(this, a, b);
-			var name = a.name;
-			//不合法
-			var parent = $(a).parent();
-			var icon = parent.find('i.icon');
-			if (icon.length == 0) {
-				$(a).after("<i class='icon'></i>");
-			}
-			if (this.invalid[name]) {
-				icon.removeClass('success').addClass('error');
-			} else {
-				icon.removeClass('error').addClass('success');
-			}
-		},
-		success : function(a, b) {
-			var parent = $(a).parent();
-			var icon = parent.find('i.icon');
-			if (icon.length == 0) {
-				$(a).after("<i class='icon success'></i>");
-			} else {
-				icon.removeClass('error').addClass('success');
-			}
-		},
-		errorPlacement : function(error, element) {
-			error.appendTo(element.parent());
-			var parent = element.parent();
-			var icon = parent.find('i.icon');
-			if (icon.length == 0) {
-				parent.append("<i class='icon error'></i>");
-			} else {
-				icon.removeClass('success').addClass('error');
-			}
+			applyRestoreManagerDate:"请选择恢复营业日期"
 		}
-	});
+	}));
 	
-	var flag = false;
-	new File(
-			{
-				el : '.contentColInner input',
-				eve : 'change',
-				alow : [ 'jpg', 'png', 'gif', 'jpeg' ],
-				url : cfg.basePath+"/licPreGns/fileUpload?accesstoken="+$.getCookieAcce()+"&orgCode="+$.getCookieOrg(),
-				callBack : function(id, a) {
-					var taget = $("#"+id);
-					var parent = taget.parents(".contentColInner");
-					var showImg = parent.find('.showImg');
-					var url  = cfg.basePath+"/licPreGns/filePreview?filePath="+a.data.path+"&ccesstoken="+$.getCookieAcce()+"&orgCode="+$.getCookieOrg();
-					
-					var lastimg = showImg.find('.imgParent:last');
-					lastimg.find('img').attr({'src':url});
-					lastimg.find('img').data('img',a.data);
-					lastimg.find('.icon').show();
-					
-					if(!flag){
-						layer.photos({
-						    photos: '.showImg'
-						   ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-						}); 
-						flag = true;
-					}
-					taget.val('');
-					
-					
-				},
-				before:function(a,b,c){
-					
-					var taget = $(this);
-					var targetCount = taget.attr('count');
-					targetCount = targetCount ? parseInt(targetCount) : 9999;
-					
-					var parent = taget.parents(".contentColInner");
-					var showImg = parent.find('.showImg');
-					//判断是否能够上传文件 超过了数量
-					if(showImg.find('img').length>=targetCount){
-						return false;
-					}
-					showImg.append("<div class='imgParent'>"+
-							"<img src='"+base+"/assets/img/loading.gif'>"+
-							 "<i class='icon close' style='background-position: -17px 0px;display:none;'></i>"+
-							"</div>");
-					
-					
-					if(showImg.find('img').length>=targetCount){
-						parent.find("input[type='file']").hide();
-						parent.find('.buttonContainer .button').addClass('disabled');
-					}
-					
-					return true;
-				}
-			});
-
-	//删除文件 icon close
-	$(".showImg").on('click',".icon.close",function(){
-		var parent =  $(this).parents(".contentColInner");
-		var imgParent = $(this).parents('.imgParent');
-		imgParent.remove();
-		parent.find("input[type='file']").show();
-		parent.find('.buttonContainer .button').removeClass('disabled');
-	});
+	//上传文件
+	biz.upload();
 	
 	$('.submitBtn').click(function() {
 		//验证表单 
-		var formFlag = $(".layui-form").valid();
-		if(!formFlag){
+		var  sendData = biz.formValidate();
+		if(!sendData){
 			return false;
 		}
 		
-		//验证文件
-		var fileData = $.extend([],cfg.files.resume);
-		fileData.shift();
-		$('.contentColInner').each(function(i,v){
-			 var materialNameTitle = $(this).attr('materialNameTitle');
-			 var imgs = $(this).find('img');
-			 var imgType = fileData[i];
-			 var count =  imgType.count;
-			 var imgDatas = [];
-			 imgs.each(function(i,v){
-				 var imgData = $(this).data('img');
-				 if(imgData){
-					 var postImg = {};
-					 postImg.seqNo = i;
-					 postImg.picName = imgData.name;
-					 postImg.applyMaterialAttPath = imgData.path;
-					 imgDatas.push(postImg);
-				 } 
-			 });
-			 if(imgDatas.length==0){
-				 layer.alert("请上传【"+imgType.materialName+"】",{title:"友情提醒"});
-				 return false;
-			 }
-			 
-			 fileData[i].applyMaterialAttArray = imgDatas; 
-		});
-		
-		//验证声明$(".agreed:checked")
-		
-		if($(".agreed:checked").length==0){
-			layer.alert("请点击同意按钮",{title:"友情提醒"});
-			return false;
-		}
-		
-		var  formData = $(".layui-form").getFormData();
-		
-		/* var formData = {};
-		var datas = data.split('&');
-		$(datas).each(function(i,v){
-			var vs = v.split('=');
-			formData[vs[0]] = vs[1];
-		}); */
-		
-		formData.applyType = $.getApplyTypCode();
-		formData.bizRange = '1501,1502';
-		// formData.bizAddrAdc = $("input[name='bizAddrAdc']").attr('data-code');
+		var formData = sendData.rlicPreAcceptInfo;
 		
 		formData.entName = lic.companyName; // 填充额外的信息
 		formData.bizAddrAdc = lic.rlicAdcFull;
@@ -226,13 +85,18 @@ $(document).ready(function(){
 		formData.picCidAddrStreet = lic.retailCidAddress;
 		formData.picAddrStreet = lic.retailAddress;
 		formData.lineTel = lic.retailTel;
-		formData.bizRangeIsChange = 0; //没有变更项..
+		formData.bizRangeIsChange = 0; //没有变更项
+		formData.postAddrAdc = lic.retailTel;
+		formData.postLinkName = user.username;
+		formData.postLinkTel = user.mobile;
+		 
 		
-		var  postData = {rlicPreAcceptInfo: formData, applyMaterialArray: fileData};
-		console.log(JSON.stringify(postData));
+		console.log(lic);
+	
+		sendData.rlicPreAcceptInfo = formData;
 		$.ajaxPost({
 			url:cfg.basePath+"/licPreGns/submitApplyZJ",
-			data:{jsonStr:JSON.stringify(postData)},
+			data:{jsonStr:JSON.stringify(sendData)},
 			ok:function(msg){
 				//msg.data
 				//缓存信息在sessio中

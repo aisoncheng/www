@@ -31,8 +31,6 @@
 			mode : 'range'
 		});
 		
-		
-
 
 		$(".radioBody").click(function() {
 			var val = $(this).data('checked');
@@ -47,6 +45,8 @@
 			
 			var name = radio.attr('name');
 			var radioVal = radio.val();
+			
+			
 			if(name=='placeOwnership'){
 				//2502
 				if (radioVal == '2502') {
@@ -66,7 +66,7 @@
 
 		});
 
-		$(".layui-form").validate({
+		$(".layui-form").validate(biz.yzOption({
 			rules : {
 				entName : "required",
 				bizaddrStreet : "required",
@@ -91,7 +91,12 @@
 				linkName : "required",
 				lineTel : 'required',
 				postAddrAdc : 'required',
-				postAddrStreet : 'required'
+				postAddrStreet : 'required',
+				ecoTypeOther:{
+					required:function(){
+						return $("input[name='ecoType']:checked").val() == '1410'
+					}
+				}
 
 			},
 			messages : {
@@ -112,43 +117,10 @@
 				linkName : "请输入联系人",
 				lineTel : '请输入联系人电话',
 				postAddrAdc : '请选择邮寄地址',
-				postAddrStreet : '请选择邮寄地址详情'
-			},
-			onkeyup : function(a, b) {
-				$.validator.defaults.onkeyup.call(this, a, b);
-				var name = a.name;
-				//不合法
-				var parent = $(a).parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					$(a).after("<i class='icon'></i>");
-				}
-				if (this.invalid[name]) {
-					icon.removeClass('success').addClass('error');
-				} else {
-					icon.removeClass('error').addClass('success');
-				}
-			},
-			success : function(a, b) {
-				var parent = $(a).parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					$(a).after("<i class='icon success'></i>");
-				} else {
-					icon.removeClass('error').addClass('success');
-				}
-			},
-			errorPlacement : function(error, element) {
-				error.appendTo(element.parent());
-				var parent = element.parent();
-				var icon = parent.find('i.icon');
-				if (icon.length == 0) {
-					parent.append("<i class='icon error'></i>");
-				} else {
-					icon.removeClass('success').addClass('error');
-				}
+				postAddrStreet : '请选择邮寄地址详情',
+				ecoTypeOther:"请输入其他经济类型"
 			}
-		});
+		}));
 
 		
 	

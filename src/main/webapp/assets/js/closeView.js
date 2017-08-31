@@ -32,15 +32,18 @@ $(document).ready(function(){
 				biz.viewFile(param,files);
 				
 				$(".agreed").prop('checked',true);
+				
+				
+				//订阅user对应的 对象	
+				 pubsub.subscribe("user",function(key,data){
+					 $(".picName").val(data.username);
+					 $(".lineTel").val(data.mobile);
+				 });
 			}
 		});
 	
 	}
-	 //订阅user对应的 对象	
-	 pubsub.subscribe("user",function(key,data){
-		 $(".picName").val(data.username);
-		 $(".lineTel").val(data.mobile);
-	 });
+	 
 
 	
 });

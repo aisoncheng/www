@@ -117,26 +117,35 @@ $.extend( $.fn, {
 
 		return validator;
 	},
-
 	// https://jqueryvalidation.org/valid/
-	valid: function() {
-		var valid, validator, errorList;
+	valid: function(target) {
+		
+		if(target){
+			var vob = this.validate();
+			vob.check(target);
+			vob.showErrors();
+			return vob;
+		}else{
+			var valid, validator, errorList;
 
-		if ( $( this[ 0 ] ).is( "form" ) ) {
-			valid = this.validate().form();
-		} else {
-			errorList = [];
-			valid = true;
-			validator = $( this[ 0 ].form ).validate();
-			this.each( function() {
-				valid = validator.element( this ) && valid;
-				if ( !valid ) {
-					errorList = errorList.concat( validator.errorList );
-				}
-			} );
-			validator.errorList = errorList;
+			if ( $( this[ 0 ] ).is( "form" ) ) {
+				valid = this.validate().form();
+			} else {
+				errorList = [];
+				valid = true;
+				validator = $( this[ 0 ].form ).validate();
+				this.each( function() {
+					valid = validator.element( this ) && valid;
+					if ( !valid ) {
+						errorList = errorList.concat( validator.errorList );
+					}
+				} );
+				validator.errorList = errorList;
+			}
+			return valid;
 		}
-		return valid;
+		
+		
 	},
 
 	// https://jqueryvalidation.org/rules/
@@ -364,23 +373,23 @@ $.extend( $.validator, {
 	},
 
 	messages: {
-		required: "ÕâÊÇ±ØÌî×Ö¶Î",
-		remote: "ÇëĞŞÕı´Ë×Ö¶Î",
-		email: "ÇëÊäÈëÓĞĞ§µÄµç×ÓÓÊ¼şµØÖ·",
-		url: "ÇëÊäÈëÓĞĞ§µÄÍøÖ·",
-		date: "ÇëÊäÈëÓĞĞ§µÄÈÕÆÚ",
-		dateISO: "ÇëÊäÈëÓĞĞ§µÄÈÕÆÚ (YYYY-MM-DD)",
-		number: "ÇëÊäÈëÓĞĞ§µÄÊı×Ö",
-		digits: "Ö»ÄÜÊäÈëÊı×Ö",
-		creditcard: "ÇëÊäÈëÓĞĞ§µÄĞÅÓÃ¿¨ºÅÂë",
-		equalTo: "ÄãµÄÊäÈë²»ÏàÍ¬",
-		extension: "ÇëÊäÈëÓĞĞ§µÄºó×º",
-		maxlength: $.validator.format( "×î¶à¿ÉÒÔÊäÈë {0} ¸ö×Ö·û" ),
-		minlength: $.validator.format( "×îÉÙÒªÊäÈë {0} ¸ö×Ö·û" ),
-		rangelength: $.validator.format( "ÇëÊäÈë³¤¶ÈÔÚ {0} µ½ {1} Ö®¼äµÄ×Ö·û´®" ),
-		range: $.validator.format( "ÇëÊäÈë·¶Î§ÔÚ {0} µ½ {1} Ö®¼äµÄÊıÖµ" ),
-		max: $.validator.format( "ÇëÊäÈë²»´óÓÚ {0} µÄÊıÖµ" ),
-		min: $.validator.format( "ÇëÊäÈë²»Ğ¡ÓÚ {0} µÄÊıÖµ" ),
+		required: "ï¿½ï¿½ï¿½Ç±ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½",
+		remote: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½",
+		email: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½Äµï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ö·",
+		url: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½ï¿½ï¿½Ö·",
+		date: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+		dateISO: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (YYYY-MM-DD)",
+		number: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+		digits: "Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+		creditcard: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½",
+		equalTo: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Í¬",
+		extension: "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ§ï¿½Äºï¿½×º",
+		maxlength: $.validator.format( "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ {0} ï¿½ï¿½ï¿½Ö·ï¿½" ),
+		minlength: $.validator.format( "ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ {0} ï¿½ï¿½ï¿½Ö·ï¿½" ),
+		rangelength: $.validator.format( "ï¿½ï¿½ï¿½ï¿½ï¿½ë³¤ï¿½ï¿½ï¿½ï¿½ {0} ï¿½ï¿½ {1} Ö®ï¿½ï¿½ï¿½ï¿½Ö·ï¿½" ),
+		range: $.validator.format( "ï¿½ï¿½ï¿½ï¿½ï¿½ë·¶Î§ï¿½ï¿½ {0} ï¿½ï¿½ {1} Ö®ï¿½ï¿½ï¿½ï¿½ï¿½Öµ" ),
+		max: $.validator.format( "ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½ï¿½ï¿½ {0} ï¿½ï¿½ï¿½ï¿½Öµ" ),
+		min: $.validator.format( "ï¿½ï¿½ï¿½ï¿½ï¿½ë²»Ğ¡ï¿½ï¿½ {0} ï¿½ï¿½ï¿½ï¿½Öµ" ),
 		step: $.validator.format( "Please enter a multiple of {0}." )
 	},
 
@@ -604,6 +613,7 @@ $.extend( $.validator, {
 		},
 
 		valid: function() {
+			console.log(this.check);
 			return this.size() === 0;
 		},
 

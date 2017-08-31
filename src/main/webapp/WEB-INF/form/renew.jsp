@@ -184,7 +184,7 @@
 									<div class="row uploadRow">
 										<div class="col labelCol"
 											style="margin-left: 0%; width: 16.666666666666664%;">
-											<span class="fileLable">身份证-正面</span>
+											<span class="fileLable">负责人（经营者）身份-正面</span>
 										</div>
 										<div class="col contentCol"
 											style="margin-left: 0%; width: 83.33333333333334%;">
@@ -203,7 +203,7 @@
 									<div class="row uploadRow">
 										<div class="col labelCol"
 											style="margin-left: 0%; width: 16.666666666666664%;">
-											<span class="fileLable">身份证-反面</span>
+											<span class="fileLable">负责人（经营者）身份证-反面</span>
 										</div>
 										<div class="col contentCol"
 											style="margin-left: 0%; width: 83.33333333333334%;">

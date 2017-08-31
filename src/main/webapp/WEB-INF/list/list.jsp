@@ -303,7 +303,32 @@
 		 });
 		 
 		 
-		
+		 $('.tableComponet').on('click','.quxiao',function(){ 
+			 if($(this).hasClass('disabled')){
+				 return false;
+			 }
+			 
+			 var status = $(this).attr("data-status");
+			 var id = $(this).attr("data-id");
+			 status = parseInt(status); 
+			 var those = $(this);
+			 layer.myconfirm('确定取消当前申请吗？',{icon:3}, function(index){
+				 layer.close(index);
+				 var data = {preAcceptUuid:id,preAcceptStatus:-1};
+				 sendRevoke(data,function(msg){
+					 if(msg.code==200){
+						 those.addClass('disabled');
+						 those.parents('tr').find('td').eq(2).html('已取消');
+					 }
+				 }); 
+			 },function(index){
+				 layer.close(index);
+			 });  
+
+		 });
+		 
+		 //preAcceptUuid:8a83ad965e35e5b4015e37171b370114
+		// preAcceptStatus:-1
 		 
 		
 	 });

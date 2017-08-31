@@ -49,23 +49,24 @@
 										<label>申请人</label>
 										<input name="picName" class='picName disabled' disabled="disabled"  autoFill='true' />
 									</div>
-									<div class="col col-12 retailLicNoDiv">
-										<label>许可证号</label> 
-										<input name="retailLicNo" class="retailLicNo disabled"  readonly="readonly" disabled="disabled"/>
-										<img alt="" src="${webPath}/assets/img/loading.gif">
-									</div>
+									<div class="col col-12">
+											<label>联系电话</label> 
+											<input name="lineTel" class='disabled lineTel' disabled="disabled"  autoFill='true'/>
+										</div>
 								</div>
 									
 								<div class="formDiv">
 									<div class="row">
+										<div class="col col-12 retailLicNoDiv">
+											<label>许可证号</label> 
+											<input name="retailLicNo" class="retailLicNo disabled"  readonly="readonly" disabled="disabled"/>
+											<img alt="" src="${webPath}/assets/img/loading.gif" class='isLoading'>
+										</div>
 										<div class="col col-12">
 											<label>联系人</label>
 											<input name="linkName" class="linkName" />
 										</div>
-										<div class="col col-12">
-											<label>联系电话</label> 
-											<input name="lineTel" class='disabled lineTel' disabled="disabled"  autoFill='true'/>
-										</div>
+										
 									</div>
 									
 									<div class="row">
@@ -112,7 +113,7 @@
 									<div class="row uploadRow">
 										<div class="col labelCol"
 											style="margin-left: 0%; width: 16.666666666666664%;">
-											<span class="fileLable">身份证-正面</span>
+											<span class="fileLable">负责人（经营者）身份证-正面</span>
 										</div>
 										<div class="col contentCol"
 											style="margin-left: 0%; width: 83.33333333333334%;">
@@ -131,7 +132,7 @@
 									<div class="row uploadRow">
 										<div class="col labelCol"
 											style="margin-left: 0%; width: 16.666666666666664%;">
-											<span class="fileLable">身份证-反面</span>
+											<span class="fileLable">负责人（经营者）身份证-反面</span>
 										</div>
 										<div class="col contentCol"
 											style="margin-left: 0%; width: 83.33333333333334%;">
@@ -189,7 +190,7 @@ $(function() {
 	 if(param.i==2){
 		$.createScript("${webPath}/assets/js/closeView.js");
 	 }else if(param.i==1){
-		$.createScript("${webPath}/assets/js/closeEdit.js");
+		$.createScript("${webPath}/assets/js/resumeEdit.js");
 	 }else{
 		$.createScript("${webPath}/assets/js/resumeAdd.js");
 	 }

@@ -148,6 +148,8 @@
 			 console.log(12);
 		 });;
 		
+		 
+		 var phoneCode = {};
 		 //发送验证码
 		 $(".sendMsg").click(function(){
 			 var val = $("input[name='phone']").val();
@@ -158,13 +160,19 @@
 				 });
 			 }else{
 				 //发送请求  
-				 
-				 
-				 $("input[name='yzm']").removeClass("disabled").removeAttr("disabled");
-				 $("input[name='phone']").addClass("disabled").attr("disabled","disabled");
+				 var phone = $("input[name='phone']").val();
+				 $.ajaxPost({
+					 url:'/licPreGns/smsSendMsg',
+					 data:{phone:phone},
+					 ok:function(msg){
+						 if(msg.code==200){
+							 phoneCode = msg.data;
+							 $("input[name='yzm']").removeClass("disabled").removeAttr("disabled");
+							 $("input[name='phone']").addClass("disabled").attr("disabled","disabled");
+						 }
+					 }
+				 })
 			 }
-			 
-			 
 		 });
 		 
 		 $("input[name='yzm']").keyup(function(){
@@ -176,12 +184,25 @@
 			 }
 		 });
 		 
-		 
 		 //验证手机号码
 		 function vPhone(){
 			 
 			 return 
 		 }
+		 $('.sure').click(function(){
+			 
+			 $.ajaxPost({
+				 url:' /licPreGns/validataCode',
+				 data:{id:phoneCode.id,code:phoneCode.code},
+				 ok:function(msg){
+					 if(msg.code==200){
+						 $('.nextButton').removeClass('disabled').removAttr('disabled');
+					 }
+				 }
+			 });
+		 });
+		 //验证验证码 /licPreGns/validataCode?id=undefined&code=123456
+		 
 	 });
 </script>
 </html>

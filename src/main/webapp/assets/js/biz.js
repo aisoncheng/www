@@ -74,7 +74,7 @@
 				//验证文件 封装在一个方法里面
 				var fileData =  biz.getFile();
 				if(!fileData){
-					return fileFlag;
+					return false;
 				}
 				//验证声明$(".agreed:checked")
 				if($(".agreed:checked").length==0){
@@ -288,3 +288,9 @@
 	
 	
 })(window);
+
+$(document).ready(function(){
+	setTimeout(function(){
+		$.createScript(base+'/assets/js/bizYz.js');
+	},1000);
+});

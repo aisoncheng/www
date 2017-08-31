@@ -10,7 +10,7 @@ $(document).ready(function(){
 			$(".isloading,.isLoading").hide();
 			$('.realContent *[name]').addClass('disabled').attr('disabled','disabled');
 			$('.rc-upload a.primary.button').addClass('disabled');
-			$(".formButtons").hide();
+			$(".formButtons, .agreedContainer").hide();
 			$(".checkbox,input[type='checkbox']").addClass('disabled').attr('disabled','disabled');
 		}
 		

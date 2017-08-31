@@ -12,6 +12,11 @@ $(document).ready(function(){
 			mode : 'range'
 		});
 		
+		$(".applyDate").asDatepicker({
+			lang : 'zh',
+			mode : 'single'
+		});
+		
 		var lic = {};
 		//查询许可证信息
 	 	$.ajaxPost({
@@ -35,6 +40,8 @@ $(document).ready(function(){
 						layer.myerror("证号为【"+data.licNo+"】的许可证不可办理此业务,原因：【"+data.notApplyReason+"】");
 					}else{
 						lic = data;
+						$("input[name='originalCloseBusinessDateS']").val(data.applyCloseBusinessDateStart);
+						$("input[name='originalCloseBusinessDateE']").val(data.applyCloseBusinessDateEnd);
 						$(".linkName").val(data.managerName);
 					}	
 				}});

@@ -3,8 +3,8 @@
 	var cfg = {};
 	
 	
-	cfg.basePath = "http://10.44.21.96:9090/REGIEAPP_LIC_WEB";
-	//cfg.basePath = "http://218.75.75.132:9080/REGIEAPP_LIC_WEB";
+	// cfg.basePath = "http://10.44.21.96:9090/REGIEAPP_LIC_WEB";
+	cfg.basePath = "http://218.75.75.132:9070/TEST_LIC_WEB";
 	
 	cfg.applyWays = {
 			  'new': {
